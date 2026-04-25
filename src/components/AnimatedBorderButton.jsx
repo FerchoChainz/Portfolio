@@ -29,8 +29,8 @@ export const AnimatedBorderButton = () => {
           className="animated-border-path"
         />
       </svg>
-      <span>
-        <Download /> Download CV
+      <span className="relativer z-10 flex items-center justify-center gap-2">
+        <Download className="w-5 h-5" /> Download CV
       </span>
     </button>
   );
