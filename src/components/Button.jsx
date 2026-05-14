@@ -1,5 +1,5 @@
 // Props are arguments passed into React components. Props are passed to components via HTML attributes.
-export const Button = ({className ="", size = "default", children})=> {
+export const Button = ({className ="", size = "default", children, ...props})=> {
 
 
     const baseClases = "relative oveflow-hidden rounded-full font-medium focus:outline-none focus:visible:ring-2 focus-visible:ring-primary bg-primary text-primray-foreground hover:bg-primary/90 shadow-lg shadow-primary/25";
@@ -12,7 +12,7 @@ export const Button = ({className ="", size = "default", children})=> {
     
     const classes = `${baseClases} ${sizeClasses[size]} ${className}`;
     return ( 
-        <button className={classes}>
+        <button className={classes} {...props}>
             <span className="relative flex items-center justify-center gap-2 ">{children}</span>
         </button>
     );
