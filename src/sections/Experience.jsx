@@ -1,21 +1,21 @@
 const experiences = [
   {
-    period: "2021 - Present",
-    role: "Backend Developer",
-    company: "Company 2",
+    period: "2025 - Present",
+    role: "Freelance Software Developer",
+    company: "Self-employed",
     description:
-      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptas, voluptate.",
-    technologies: ["NodeJS", "Express", "MongoDB", "Docker"],
+      "I am currently working as a freelancer and learning emerging technologies to diversify my tech stack. This portfolio is a small example of that. I have been involved in various projects, including web applications, APIs, and automation scripts. I have collaborated with clients to understand their requirements and deliver solutions that meet their needs.",
+    technologies: ["React", "Angular", "Laravel","Express"],
     current: true,
   },
 
   {
-    period: "2020 - 2021",
+    period: "2024 - 2025",
     role: "Backend Developer jr",
-    company: "Company 1",
+    company: "H2O Beborn",
     description:
-      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptas, voluptate.",
-    technologies: ["NodeJS", "Express", "MongoDB"],
+      "I contributed to the development of a custom system for the company, specifically an OCR system for extracting information from scanned documents. This streamlined the manual processes that preceded automation. .",
+    technologies: ["Python", "Flask", "PaddleOCR", "Docker"],
     current: false,
   },
 ];
