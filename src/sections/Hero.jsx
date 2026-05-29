@@ -1,7 +1,7 @@
 import { ArrowRight, ChevronDown, Download } from "lucide-react";
 import { Button } from "../components/Button";
 import { AnimatedBorderButton } from "../components/AnimatedBorderButton";
-import { FiGithub, FiLinkedin, FiTwitter } from "react-icons/fi";
+import { FiGithub, FiLinkedin, FiTwitter, FiFacebook } from "react-icons/fi";
 
 export const Hero = () => {
   const skills = [
@@ -27,21 +27,21 @@ export const Hero = () => {
   const socialLinks = [
     {
       id: 1,
-      href: "https://github.com/tu-usuario",
+      href: "https://github.com/FerchoChainz",
       Icon: FiGithub,
       label: "GitHub",
     },
     {
       id: 2,
-      href: "https://linkedin.com/in/tu-perfil",
+      href: "https://www.linkedin.com/in/lazaro-estrada-420b4328a/",
       Icon: FiLinkedin,
       label: "LinkedIn",
     },
     {
       id: 3,
-      href: "https://twitter.com/tu-cuenta",
-      Icon: FiTwitter,
-      label: "Twitter",
+      href: "https://www.facebook.com/lazaro.l.estrada/",
+      Icon: FiFacebook,
+      label: "Facebook",
     },
   ];
 
@@ -112,10 +112,10 @@ export const Hero = () => {
 
             {/* ctas */}
             <div className="flex flex-wrap gap-4 animate-fade-in animate-delay-300">
-              <Button size="lg">
+              <Button href="#contact" size="lg">
                 Contact Me <ArrowRight className="w-5 h-5" />
               </Button>
-              <AnimatedBorderButton >
+              <AnimatedBorderButton href="/cv.pdf" download="Lazaro_Estrada_CV.pdf">
                 <Download className="w-5 h-5" /> Download CV
               </AnimatedBorderButton>
             </div>
