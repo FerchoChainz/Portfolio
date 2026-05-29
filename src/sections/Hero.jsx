@@ -50,7 +50,7 @@ export const Hero = () => {
       {/* bg image */}
       <div className="absolute inset-0">
         <img
-          src="public/hero-bg.jpg"
+          src="/hero-bg.jpg"
           alt="hero-img"
           className="w-full h-full object-cover opacity-40"
         />

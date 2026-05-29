@@ -36,8 +36,8 @@ export const Experience = () => {
             className="text-4xl md:text-5xl font-bold mt-4 mb-6 animate-fade-in animate-delay-100
                     text-secondary-foreground"
           >
-            Exprience that{" "}
-            <span className="font-serif italic text-white"> speak values.</span>
+            Experience that{" "}
+            <span className="font-serif italic text-white"> speaks values.</span>
           </h2>
 
           <p className="text-muted-foreground animate-fade-in animate-delay-200">
@@ -51,7 +51,7 @@ export const Experience = () => {
 
         {/* timeline */}
         <div className="relative">
-          <div className="timeline-glow absolute left-0 md:left-1/2 top-0 bottom-0 w-[2px] bg-gradient-to-b from-primary/70 via-primary/30 to-transparent md:-trnaslate-x-1/2 shadow-[0_0_25px_rgba(32,178,166,0/8)]" />
+          <div className="timeline-glow absolute left-0 md:left-1/2 top-0 bottom-0 w-[2px] bg-gradient-to-b from-primary/70 via-primary/30 to-transparent md:-translate-x-1/2 shadow-[0_0_25px_rgba(32,178,166,0/8)]" />
 
           {/* experience items */}
           <div className="space-y-12">
