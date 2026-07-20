@@ -94,7 +94,7 @@ export const Contact = () => {
         <div className="absolute bottom-1/4 right-1/4 w-64 h-64 bg-highlight/5 rounded-full blur-3xl" />
       </div>
 
-      <div className="contaioner mx-auto px-6 relative z-10">
+      <div className="container mx-auto px-6 relative z-10">
         {/* section header */}
         <div className="text-center max-w-3xl mx-auto mb-16">
             <span className="text-secondary-foreground text-sm font-medium tracking-wider uppercase animate-fade-in">Get in touch</span>
@@ -201,14 +201,14 @@ export const Contact = () => {
                     href={item.href}
                     className="flex items-center gap-4 p-4 rounded-xl hover:bg-surface transition-colors group"
                   >
-                    <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center group-hover:bg-primary/20 transition-colors">
+                    <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center group-hover:bg-primary/20 transition-colors shrink-0">
                       <item.icon className="w-5 h-5 text-primary" />
                     </div>
-                    <div>
+                    <div className="min-w-0 flex-1">
                       <div className="text-sm text-muted-foreground">
                         {item.label}
                       </div>
-                      <div className="font-medium">{item.value}</div>
+                      <div className="font-medium break-all sm:break-words">{item.value}</div>
                     </div>
                   </a>
                 ))}
