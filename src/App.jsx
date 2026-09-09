@@ -8,9 +8,9 @@ import { Projects } from "./sections/Projects"
 
 function App() {
 
-  return (<div className="min-h-screen overflow-x-hidden">
+  return (<div className="min-h-screen overflow-x-hidden bg-black text-foreground">
     <Navbar/>
-    <main>
+    <main className="relative bg-black">
       <Hero/>
       <About/>
       <Projects/>
