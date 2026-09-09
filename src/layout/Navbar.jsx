@@ -17,13 +17,14 @@ export const Navbar = () => {
     const [isScrolled, setIsScrolled] = useState(false);
 
     useEffect(() => {
-      const handleScroll = ()=> {
-        setIsScrolled(window.scrollY > 50);
-      }
-      window.addEventListener('scroll', handleScroll);
+      const handleScroll = () => {
+        setIsScrolled(window.scrollY > window.innerHeight * 0.85);
+      };
+      window.addEventListener('scroll', handleScroll, { passive: true });
+      handleScroll();
 
-      return () => removeEventListener('scroll', handleScroll);
-    },[])
+      return () => window.removeEventListener('scroll', handleScroll);
+    }, []);
 
   return (
     <header className={`fixed top-0 right-0 transition-all duration-300 left-0 ${isScrolled ? "glass-strong py-3" : "bg-transparent py-5"}  z-50 `}>
