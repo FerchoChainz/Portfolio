@@ -1,3 +1,4 @@
+import { lazy, Suspense } from "react";
 import { 
   MapPin, 
   Download, 
@@ -7,7 +8,14 @@ import {
   GraduationCap
 } from "lucide-react";
 import { FiGithub, FiLinkedin } from "react-icons/fi";
-import { InteractiveCanvasShowcase } from "../components/InteractiveCanvasShowcase";
+
+// This is an interaction-heavy, below-the-fold section. Loading it on demand
+// keeps the initial page bundle focused on the portfolio's primary content.
+const InteractiveCanvasShowcase = lazy(() =>
+  import("../components/InteractiveCanvasShowcase").then((module) => ({
+    default: module.InteractiveCanvasShowcase,
+  })),
+);
 
 export const About = () => {
   return (
@@ -126,7 +134,7 @@ export const About = () => {
               </a>
 
               <a
-                href="https://linkedin.com"
+                href="https://www.linkedin.com/in/lazaro-estrada-420b4328a/"
                 target="_blank"
                 rel="noreferrer"
                 aria-label="LinkedIn Profile"
@@ -198,7 +206,17 @@ export const About = () => {
 
         {/* Open Editorial Skills Stage - Inspired by madewithgsap.com GSAP Motion */}
         <div className="w-full relative overflow-visible mt-16 sm:mt-24">
-          <InteractiveCanvasShowcase />
+          <Suspense
+            fallback={
+              <div
+                aria-busy="true"
+                aria-label="Loading interactive architecture showcase"
+                className="h-[520px] sm:h-[680px] rounded-2xl border border-[#837062]/25 bg-[#0A0B0D]"
+              />
+            }
+          >
+            <InteractiveCanvasShowcase />
+          </Suspense>
         </div>
 
       </div>

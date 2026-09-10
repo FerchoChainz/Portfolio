@@ -28,10 +28,17 @@ export const Contact = () => {
     message: "",
   });
 
-  const handleCopyEmail = () => {
-    navigator.clipboard.writeText("lazaroEstrada99@outlook.com");
-    setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
+  const handleCopyEmail = async () => {
+    try {
+      await navigator.clipboard.writeText("lazaroEstrada99@outlook.com");
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    } catch {
+      setSubmitStatus({
+        type: "error",
+        message: "Could not copy the email address. Please use the direct email link below.",
+      });
+    }
   };
 
   const handleSubmit = async (e) => {
@@ -210,6 +217,7 @@ export const Contact = () => {
                   id="name"
                   type="text"
                   required
+                  autoComplete="name"
                   value={formData.name}
                   onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                   placeholder="Your full name or organization"
@@ -231,9 +239,10 @@ export const Contact = () => {
                     <span className="text-xs font-mono text-[#581C24]">•</span>
                   </div>
                   <input
-                    id="email"
-                    type="email"
-                    required
+                  id="email"
+                  type="email"
+                  required
+                  autoComplete="email"
                     value={formData.email}
                     onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                     placeholder="email@domain.com"
@@ -253,8 +262,9 @@ export const Contact = () => {
                     <span className="text-[10px] font-mono text-[#71717A] uppercase tracking-wider">OPTIONAL</span>
                   </div>
                   <input
-                    id="phone"
-                    type="tel"
+                  id="phone"
+                  type="tel"
+                  autoComplete="tel"
                     value={formData.phone}
                     onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
                     placeholder="+52 ... / +1 ..."
@@ -288,7 +298,7 @@ export const Contact = () => {
               {/* Action Submit Area with Signature Arrow */}
               <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pt-2">
                 <p className="text-[11px] font-mono text-[#52525B] max-w-xs leading-normal order-2 sm:order-1">
-                  Encrypted transmission via EmailJS protocol. Expected response in &lt; 24h.
+                  Sent using EmailJS. I typically respond within 24 hours.
                 </p>
 
                 <button
@@ -374,7 +384,7 @@ export const Contact = () => {
                     <span>GitHub: <strong className="text-[#09090B] font-medium">@FerchoChainz</strong></span>
                   </a>
                   <a
-                    href="https://linkedin.com"
+                    href="https://www.linkedin.com/in/lazaro-estrada-420b4328a/"
                     target="_blank"
                     rel="noreferrer"
                     className="flex items-center gap-2 hover:text-black transition-colors py-0.5"
@@ -394,4 +404,3 @@ export const Contact = () => {
     </section>
   );
 };
- 
