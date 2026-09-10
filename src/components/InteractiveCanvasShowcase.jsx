@@ -1,5 +1,6 @@
 import { useState, useRef, useEffect, useCallback } from "react";
 import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
 import { 
   Code2, 
@@ -30,6 +31,8 @@ import {
   SiGit,
   SiPostgresql
 } from "react-icons/si";
+
+gsap.registerPlugin(ScrollTrigger);
 
 // 14 rich cards arranged across a 2D canvas plane (x, y coordinates in pixels)
 const CANVAS_CARDS = [
@@ -348,6 +351,13 @@ export const InteractiveCanvasShowcase = () => {
   const [activeNearest, setActiveNearest] = useState(CANVAS_CARDS[0]);
   const [selectedCard, setSelectedCard] = useState(null);
   const [copied, setCopied] = useState(false);
+
+  // This component is loaded after the initial page render. Its final height
+  // changes the document geometry, so every scroll trigger must recalculate.
+  useEffect(() => {
+    const frameId = requestAnimationFrame(() => ScrollTrigger.refresh());
+    return () => cancelAnimationFrame(frameId);
+  }, []);
   const [isDragging, setIsDragging] = useState(false);
 
   // Velocity tracking for physics momentum
@@ -608,18 +618,32 @@ export const InteractiveCanvasShowcase = () => {
 
   useGSAP(() => {
     if (!rootRef.current) return;
+    const el = rootRef.current;
+    const isMobile = window.innerWidth < 768;
+
+    // If already scrolled past (e.g. user navigated to #contact before this lazy component mounted),
+    // immediately guarantee visibility and clear styles
+    const rect = el.getBoundingClientRect();
+    if (rect.bottom < 0) {
+      gsap.set(el, { opacity: 1, y: 0, clearProps: "all" });
+      return;
+    }
+
     gsap.fromTo(
-      rootRef.current,
-      { opacity: 0, y: 30 },
+      el,
+      { opacity: isMobile ? 0.85 : 0, y: isMobile ? 12 : 30 },
       {
         opacity: 1,
         y: 0,
-        duration: 0.8,
+        duration: isMobile ? 0.45 : 0.8,
         ease: "power2.out",
+        clearProps: "all",
         scrollTrigger: {
-          trigger: rootRef.current,
-          start: "top 85%",
+          trigger: el,
+          start: isMobile ? "top 95%" : "top 85%",
           toggleActions: "play none none none",
+          onEnter: () => gsap.to(el, { opacity: 1, y: 0, clearProps: "all" }),
+          onEnterBack: () => gsap.to(el, { opacity: 1, y: 0, clearProps: "all" }),
         },
       }
     );

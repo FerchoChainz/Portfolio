@@ -211,7 +211,7 @@ export const About = () => {
               <div
                 aria-busy="true"
                 aria-label="Loading interactive architecture showcase"
-                className="h-[700px] sm:h-[834px] rounded-2xl border border-[#837062]/25 bg-[#0A0B0D]"
+                className="h-[650px] sm:h-[814px] rounded-2xl border border-[#837062]/25 bg-[#0A0B0D]"
               />
             }
           >

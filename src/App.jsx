@@ -10,6 +10,7 @@ import { Hero } from "./sections/Hero";
 import { Projects } from "./sections/Projects";
 
 gsap.registerPlugin(ScrollTrigger);
+ScrollTrigger.config({ ignoreMobileResize: true });
 
 function App() {
   useEffect(() => {
@@ -27,7 +28,7 @@ function App() {
     };
   }, []);
 
-  return (<div className="min-h-screen overflow-x-hidden bg-black text-foreground">
+  return (<div className="min-h-screen overflow-x-clip bg-black text-foreground">
     <Navbar/>
     <main className="relative bg-black">
       <Hero/>

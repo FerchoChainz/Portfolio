@@ -83,18 +83,43 @@ export const Projects = () => {
 
       const isMobile = window.innerWidth < 768;
 
-      gsap.from(".bento-item", {
-        opacity: isMobile ? 0.4 : 0,
-        y: isMobile ? 16 : 30,
-        duration: isMobile ? 0.45 : 0.75,
-        stagger: isMobile ? 0.06 : 0.1,
-        ease: "power2.out",
-        scrollTrigger: {
-          trigger: sectionRef.current,
-          start: isMobile ? "top 95%" : "top 85%",
-          once: true,
-        },
-      });
+      if (isMobile) {
+        gsap.fromTo(
+          ".bento-item",
+          { opacity: 0.85, y: 12 },
+          {
+            opacity: 1,
+            y: 0,
+            duration: 0.4,
+            stagger: 0.05,
+            ease: "power2.out",
+            clearProps: "all",
+            scrollTrigger: {
+              trigger: sectionRef.current,
+              start: "top 95%",
+              toggleActions: "play none none none",
+            },
+          }
+        );
+      } else {
+        gsap.fromTo(
+          ".bento-item",
+          { opacity: 0, y: 30 },
+          {
+            opacity: 1,
+            y: 0,
+            duration: 0.75,
+            stagger: 0.1,
+            ease: "power2.out",
+            clearProps: "all",
+            scrollTrigger: {
+              trigger: sectionRef.current,
+              start: "top 85%",
+              toggleActions: "play none none none",
+            },
+          }
+        );
+      }
     },
     { scope: sectionRef }
   );
