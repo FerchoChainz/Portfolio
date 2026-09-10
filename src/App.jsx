@@ -1,12 +1,31 @@
-import { Footer } from "./layout/Footer"
-import { Navbar } from "./layout/Navbar"
-import { About } from "./sections/About"
-import { Contact } from "./sections/Contact"
-import { Experience } from "./sections/Experience"
-import { Hero } from "./sections/Hero"
-import { Projects } from "./sections/Projects"
+import { useEffect } from "react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { Footer } from "./layout/Footer";
+import { Navbar } from "./layout/Navbar";
+import { About } from "./sections/About";
+import { Contact } from "./sections/Contact";
+import { Experience } from "./sections/Experience";
+import { Hero } from "./sections/Hero";
+import { Projects } from "./sections/Projects";
+
+gsap.registerPlugin(ScrollTrigger);
 
 function App() {
+  useEffect(() => {
+    // Refresh ScrollTrigger markers after fonts, layout, and images settle
+    const refreshTimer = setTimeout(() => {
+      ScrollTrigger.refresh();
+    }, 500);
+
+    const handleLoad = () => ScrollTrigger.refresh();
+    window.addEventListener("load", handleLoad);
+
+    return () => {
+      clearTimeout(refreshTimer);
+      window.removeEventListener("load", handleLoad);
+    };
+  }, []);
 
   return (<div className="min-h-screen overflow-x-hidden bg-black text-foreground">
     <Navbar/>

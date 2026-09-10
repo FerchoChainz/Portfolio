@@ -128,21 +128,19 @@ export const Experience = () => {
       const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
       if (prefersReducedMotion || !sectionRef.current) return;
 
-      gsap.fromTo(
-        ".experience-container",
-        { opacity: 0, y: 35 },
-        {
-          opacity: 1,
-          y: 0,
-          duration: 0.85,
-          ease: "power2.out",
-          scrollTrigger: {
-            trigger: sectionRef.current,
-            start: "top 80%",
-            toggleActions: "play none none none",
-          },
-        }
-      );
+      const isMobile = window.innerWidth < 768;
+
+      gsap.from(".experience-container", {
+        opacity: isMobile ? 0.4 : 0,
+        y: isMobile ? 16 : 30,
+        duration: isMobile ? 0.45 : 0.75,
+        ease: "power2.out",
+        scrollTrigger: {
+          trigger: sectionRef.current,
+          start: isMobile ? "top 95%" : "top 85%",
+          once: true,
+        },
+      });
     },
     { scope: sectionRef }
   );

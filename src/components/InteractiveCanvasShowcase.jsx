@@ -147,7 +147,7 @@ export async function bookSlot(slotId) {
     y: 340,
     w: 420,
     h: 290,
-    image: "/projects/tabla_pagina_procesada_1.png",
+    image: "/projects/tabla_pagina_procesada_1.webp",
     theme: "dark",
     badge: "Enterprise AI",
     metrics: [{ label: "Confidence", val: "98.9%" }, { label: "Engine", val: "PaddleOCR" }]
@@ -432,6 +432,8 @@ export const InteractiveCanvasShowcase = () => {
   const handlePointerDown = (e) => {
     dragRef.current.isDown = true;
     dragRef.current.hasMoved = false;
+    dragRef.current.pointerType = e.pointerType;
+    dragRef.current.isCaptured = false;
     dragRef.current.startX = e.clientX;
     dragRef.current.startY = e.clientY;
     dragRef.current.startPosX = posRef.current.x;
@@ -443,12 +445,16 @@ export const InteractiveCanvasShowcase = () => {
     dragRef.current.vy = 0;
 
     gsap.killTweensOf(posRef.current);
-    setIsDragging(true);
 
-    try {
-      e.currentTarget.setPointerCapture(e.pointerId);
-    } catch {
-      // fallback
+    // If mouse, immediately capture pointer and set dragging
+    if (e.pointerType === "mouse") {
+      setIsDragging(true);
+      try {
+        e.currentTarget.setPointerCapture(e.pointerId);
+        dragRef.current.isCaptured = true;
+      } catch {
+        // fallback
+      }
     }
   };
 
@@ -457,6 +463,28 @@ export const InteractiveCanvasShowcase = () => {
     if (!dragRef.current.isDown) return;
     const deltaX = e.clientX - dragRef.current.startX;
     const deltaY = e.clientY - dragRef.current.startY;
+
+    // For touch devices: if user is scrolling vertically, yield to browser scrolling!
+    if (dragRef.current.pointerType === "touch" && !dragRef.current.isCaptured) {
+      // If vertical delta is greater than horizontal, cancel canvas drag so page scrolls natively
+      if (Math.abs(deltaY) > Math.abs(deltaX) && Math.abs(deltaY) > 8) {
+        dragRef.current.isDown = false;
+        setIsDragging(false);
+        return;
+      }
+      // If horizontal delta dominates, capture touch for smooth canvas panning
+      if (Math.abs(deltaX) > Math.abs(deltaY) + 4 && Math.abs(deltaX) > 8) {
+        try {
+          e.currentTarget.setPointerCapture(e.pointerId);
+          dragRef.current.isCaptured = true;
+          setIsDragging(true);
+        } catch {
+          // fallback
+        }
+      } else {
+        return;
+      }
+    }
 
     if (Math.abs(deltaX) > 4 || Math.abs(deltaY) > 4) {
       dragRef.current.hasMoved = true;
@@ -492,10 +520,13 @@ export const InteractiveCanvasShowcase = () => {
     dragRef.current.isDown = false;
     setIsDragging(false);
 
-    try {
-      e.currentTarget.releasePointerCapture(e.pointerId);
-    } catch {
-      // fallback
+    if (dragRef.current.isCaptured) {
+      try {
+        e.currentTarget.releasePointerCapture(e.pointerId);
+      } catch {
+        // fallback
+      }
+      dragRef.current.isCaptured = false;
     }
 
     if (!viewportRef.current) return;
@@ -650,7 +681,7 @@ export const InteractiveCanvasShowcase = () => {
         onPointerUp={handlePointerUp}
         onPointerCancel={handlePointerUp}
         onWheel={handleWheel}
-        className={`relative w-full h-[620px] sm:h-[680px] rounded-2xl border border-[#837062]/25 overflow-hidden bg-[#0A0B0D] touch-none ${
+        className={`relative w-full h-[520px] sm:h-[680px] rounded-2xl border border-[#837062]/25 overflow-hidden bg-[#0A0B0D] touch-pan-y ${
           isDragging ? "cursor-grabbing" : "cursor-grab"
         }`}
       >
@@ -664,7 +695,8 @@ export const InteractiveCanvasShowcase = () => {
         {/* Floating Top-Left Gesture Telemetry */}
         <div className="absolute top-4 left-4 z-30 flex items-center gap-2 px-3 py-1.5 rounded-md bg-[#141517]/90 border border-[#837062]/30 backdrop-blur-md text-[11px] font-mono text-[#A89A90] pointer-events-none">
           <Move className="w-3.5 h-3.5 text-[#C5B2A4]" />
-          <span>DRAG IN ANY DIRECTION // 2D CANVAS</span>
+          <span className="hidden sm:inline">DRAG IN ANY DIRECTION // 2D CANVAS</span>
+          <span className="sm:hidden">SWIPE HORIZONTAL // TAP PILLS</span>
         </div>
 
         {/* Floating Bottom-Right ON SCREEN Pill (from madewithgsap.com video) */}
@@ -726,6 +758,10 @@ export const InteractiveCanvasShowcase = () => {
                       <img
                         src={card.image}
                         alt="OCR Document Preview"
+                        width="420"
+                        height="120"
+                        loading="lazy"
+                        decoding="async"
                         className="w-full h-full object-cover object-top opacity-85 group-hover:scale-105 transition-transform duration-500"
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent pointer-events-none" />

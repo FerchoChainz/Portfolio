@@ -51,13 +51,18 @@ export const About = () => {
           <div className="lg:col-span-5 space-y-6">
             {/* Photo & Status */}
             <div className="relative aspect-[4/3] sm:aspect-square w-full max-w-md rounded-md overflow-hidden bg-[#121315] border border-[#837062]/30 group shadow-lg">
-              <img
-                src="/profile-pic.png"
-                alt="Lázaro Estrada - Full Stack Software Engineer"
-                className="w-full h-full object-cover object-center group-hover:scale-102 transition-transform duration-500 ease-out"
-                loading="lazy"
-                decoding="async"
-              />
+              <picture>
+                <source srcSet="/profile-pic.webp" type="image/webp" />
+                <img
+                  src="/profile-pic.png"
+                  alt="Lázaro Estrada - Full Stack Software Engineer"
+                  width="400"
+                  height="400"
+                  className="w-full h-full object-cover object-center group-hover:scale-102 transition-transform duration-500 ease-out"
+                  loading="lazy"
+                  decoding="async"
+                />
+              </picture>
 
               <div className="absolute inset-0 bg-gradient-to-t from-[#0d0e10] via-transparent to-transparent opacity-80 pointer-events-none" />
 
