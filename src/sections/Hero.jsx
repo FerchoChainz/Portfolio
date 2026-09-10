@@ -163,16 +163,6 @@ export const Hero = () => {
         style={{ backgroundSize: "24px 24px" }}
       />
 
-      {/* Top terminal status badge */}
-      <div
-        role="status"
-        aria-live="polite"
-        className="hero-top-badge hero-aux px-4 py-1.5 rounded-full border border-[#837062]/25 bg-[#1A1B1D]/80 text-xs font-mono tracking-widest text-[#9A8B80] flex items-center gap-2"
-      >
-        <span className="inline-block w-2 h-2 rounded-full bg-[#C5B2A4] animate-pulse" />
-        <span>PORTFOLIO // ENG. LAZARO ESTRADA</span>
-      </div>
-
       {/* Centerpiece: $WHOAMI + generously spaced content */}
       <div className="relative z-10 flex flex-col items-center justify-center text-center my-auto py-6">
         {/* $WHOAMI in typewriter font */}
@@ -210,21 +200,6 @@ export const Hero = () => {
             Creating responsive, high-performance web applications with clean code and modern architecture.
           </p>
 
-          {/* Tech Stack Badges with proper breathing room */}
-          <div
-            aria-label="Technologies"
-            className="flex flex-wrap justify-center items-center gap-2.5 sm:gap-3 text-xs font-mono text-neutral-300"
-          >
-            {TECH_STACK.map((tech) => (
-              <span
-                key={tech}
-                className="px-3 py-1 rounded-md border border-white/10 bg-white/[0.03] hover:border-white/25 hover:text-white transition-colors"
-              >
-                {tech}
-              </span>
-            ))}
-          </div>
-
           {/* Action CTAs and Social Links */}
           <div className="flex flex-wrap justify-center items-center gap-4 pt-1">
             <a
@@ -244,7 +219,7 @@ export const Hero = () => {
             </a>
             <div className="flex items-center gap-2 pl-2 border-l border-white/10">
               <a
-                href="https://github.com/lazaroestrada"
+                href="https://github.com/FerchoChainz"
                 target="_blank"
                 rel="noreferrer"
                 aria-label="GitHub"
@@ -253,7 +228,7 @@ export const Hero = () => {
                 <FiGithub className="w-4 h-4" />
               </a>
               <a
-                href="https://linkedin.com"
+                href="https://www.linkedin.com/in/lazaro-estrada-420b4328a/"
                 target="_blank"
                 rel="noreferrer"
                 aria-label="LinkedIn"

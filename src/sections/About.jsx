@@ -186,7 +186,6 @@ export const About = () => {
 
             <div className="pt-4 border-t border-[#837062]/20 flex items-center justify-between text-[11px] font-mono text-[#9A8B80]">
               <span>CORE FOCUS</span>
-              <span className="text-[#C5B2A4]">ENGINEERING EXCELLENCE</span>
             </div>
           </div>
 

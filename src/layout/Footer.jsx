@@ -3,7 +3,7 @@ import { Terminal } from "lucide-react";
 
 const socialLinks = [
   { icon: FiGithub, href: "https://github.com/FerchoChainz", label: "GitHub" },
-  { icon: FiLinkedin, href: "https://linkedin.com", label: "LinkedIn" },
+  { icon: FiLinkedin, href: "https://www.linkedin.com/in/lazaro-estrada-420b4328a/", label: "LinkedIn" },
 ];
 
 const footerLinks = [
