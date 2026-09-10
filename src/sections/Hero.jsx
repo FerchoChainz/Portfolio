@@ -1,202 +1,258 @@
-import { ArrowRight, ChevronDown, Download } from "lucide-react";
-import { Button } from "../components/Button";
-import { AnimatedBorderButton } from "../components/AnimatedBorderButton";
-import { FiGithub, FiLinkedin, FiTwitter, FiFacebook } from "react-icons/fi";
+import { useRef } from "react";
+import { ArrowRight, ChevronDown, Download, Terminal } from "lucide-react";
+import { FiGithub, FiLinkedin } from "react-icons/fi";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useGSAP } from "@gsap/react";
+
+gsap.registerPlugin(ScrollTrigger);
+
+// Static constants extracted outside component scope
+const LETTERS = ["$", "W", "H", "O", "A", "M", "I"];
+const TECH_STACK = ["React", "TypeScript", "Node.js", "Laravel", "Go"];
 
 export const Hero = () => {
-  const skills = [
-    "React",
-    "Angular",
-    "Laravel",
-    "Node.js",
-    "Express",
-    "MongoDB",
-    "MySQL",
-    "Git",
-    "Figma",
-    "SCSS",
-    "Tailwind CSS",
-    "Docker",
-    "Go",
-    "Python",
-    "TypeScript",
-    "JavaScript",
-    "PHP",
-  ];
+  const heroRef = useRef(null);
 
-  const socialLinks = [
-    {
-      id: 1,
-      href: "https://github.com/FerchoChainz",
-      Icon: FiGithub,
-      label: "GitHub",
+  useGSAP(
+    () => {
+      const prefersReducedMotion = window.matchMedia(
+        "(prefers-reduced-motion: reduce)"
+      ).matches;
+
+      // 1. Initial fade-in on mount
+      const enterTl = gsap.timeline({ defaults: { ease: "power3.out" } });
+
+      if (prefersReducedMotion) {
+        enterTl.fromTo(
+          [".hero-letter", ".hero-cursor", ".hero-content-below", ".hero-aux"],
+          { opacity: 0 },
+          { opacity: 1, duration: 0.6, stagger: 0.04 }
+        );
+        return;
+      }
+
+      enterTl
+        .fromTo(
+          ".hero-letter",
+          { opacity: 0, y: 30, filter: "blur(8px)" },
+          {
+            opacity: 1,
+            y: 0,
+            filter: "blur(0px)",
+            clearProps: "filter",
+            duration: 0.85,
+            stagger: 0.05,
+          }
+        )
+        .fromTo(
+          ".hero-content-below",
+          { opacity: 0, y: 20 },
+          { opacity: 1, y: 0, duration: 0.75 },
+          "-=0.45"
+        )
+        .fromTo(
+          ".hero-aux",
+          { opacity: 0 },
+          { opacity: 1, duration: 0.6 },
+          "-=0.4"
+        );
+
+      // 2. Scroll-driven animation ONLY on desktop screens (>= 768px)
+      // On mobile devices, pinning with pinSpacing:false causes sections below (#about)
+      // to be trapped under Hero or push down with translateY, causing sections to disappear
+      // when navigating to #contact and returning.
+      const mm = gsap.matchMedia();
+
+      mm.add("(min-width: 768px)", () => {
+        const scrollTl = gsap.timeline({
+          scrollTrigger: {
+            trigger: heroRef.current,
+            start: "top top",
+            end: "+=100%",
+            pin: true,
+            pinSpacing: false,
+            scrub: 0.6,
+            anticipatePin: 1,
+            invalidateOnRefresh: true,
+          },
+        });
+
+        // Bottom scroll prompt fades out promptly once scrolling begins
+        scrollTl.to(
+          ".hero-scroll-prompt",
+          { opacity: 0, y: 15, duration: 0.12, ease: "power1.out" },
+          0
+        );
+
+        // Letters and cursor fly UP to top of screen sequentially
+        scrollTl.to(
+          ".hero-letter, .hero-cursor",
+          {
+            y: () => -window.innerHeight * 0.9,
+            stagger: { each: 0.04, ease: "power1.in" },
+            ease: "power2.in",
+            duration: 0.5,
+          },
+          0.05
+        );
+
+        // Letters and cursor fade out as they reach the top margin
+        scrollTl.to(
+          ".hero-letter, .hero-cursor",
+          {
+            opacity: 0,
+            stagger: { each: 0.04, ease: "power1.in" },
+            ease: "power2.in",
+            duration: 0.2,
+          },
+          0.35
+        );
+
+        // Information block ascends with the scroll, staying visible until near the top
+        scrollTl
+          .to(
+            ".hero-content-below",
+            {
+              y: () => -window.innerHeight * 0.85,
+              ease: "power2.in",
+              duration: 0.5,
+            },
+            0.05
+          )
+          .to(
+            ".hero-content-below",
+            {
+              opacity: 0,
+              ease: "power2.in",
+              duration: 0.2,
+            },
+            0.32
+          );
+
+        // Slide #about smoothly into view on desktop
+        const aboutEl = document.querySelector("#about");
+        if (aboutEl) {
+          scrollTl.fromTo(
+            aboutEl,
+            { y: () => window.innerHeight * 0.4 },
+            {
+              y: 0,
+              ease: "power2.out",
+              duration: 0.4,
+            },
+            0.6
+          );
+        }
+      });
+
+      mm.add("(max-width: 767px)", () => {
+        // On mobile, ensure #about is in clean document flow without translations
+        const aboutEl = document.querySelector("#about");
+        if (aboutEl) {
+          gsap.set(aboutEl, { clearProps: "transform,y" });
+        }
+      });
     },
-    {
-      id: 2,
-      href: "https://www.linkedin.com/in/lazaro-estrada-420b4328a/",
-      Icon: FiLinkedin,
-      label: "LinkedIn",
-    },
-    {
-      id: 3,
-      href: "https://www.facebook.com/lazaro.l.estrada/",
-      Icon: FiFacebook,
-      label: "Facebook",
-    },
-  ];
+    { scope: heroRef }
+  );
 
   return (
-    <section className="relative min-h-screen flex items-center overflow-hidden">
-      {/* bg image */}
-      <div className="absolute inset-0">
-        <img
-          src="/hero-bg.jpg"
-          alt="hero-img"
-          className="w-full h-full object-cover opacity-40"
-        />
+    <section
+      ref={heroRef}
+      id="hero"
+      className="relative z-0 w-full h-screen bg-black text-white flex flex-col justify-between items-center overflow-hidden select-none px-4 pt-20 sm:pt-24 pb-8 sm:pb-10"
+    >
+      {/* Subtle typewriter scanline/grain overlay */}
+      <div
+        className="absolute inset-0 pointer-events-none opacity-[0.035] bg-[radial-gradient(#ffffff_1px,transparent_1px)]"
+        style={{ backgroundSize: "24px 24px" }}
+      />
 
-        <div className="absolut inset-0 bg-gradient-to-b from-background/20 via-background/80 to-background"></div>
-      </div>
-
-      {/* Green dots */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        {[...Array(30)].map((_, i) => (
-          <div
-            className="absolute w-1.5 h-1.5 opacity-60 rounded-2xl"
-            style={{
-              backgroundColor: "#20B2A6",
-              left: `${Math.random() * 100}%`,
-              top: `${Math.random() * 100}%`,
-              animation: `slow-drift ${15 + Math.random() * 20}s ease-in-out infinite`,
-              animationDelay: `${Math.random() * 5}s`,
-            }}
-          ></div>
-        ))}
-      </div>
-
-      {/* Hero Content */}
-      <div className="container mx-auto px-6 pt-32 pb-20 relative z-10">
-        <div className="grid lg:grid-cols-2 gap-12 items-center">
-          {/* left column -- Text content  */}
-          <div className="space-y-8">
-            <div className="animate-fade-in">
-              <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full glass text-sm text-primary">
-                <span className="w-2 h-2 bg-primary rounded-full animate-pulse" />
-                Software Engineer - Jr Full Stack Developer
+      {/* Centerpiece: $WHOAMI + generously spaced content */}
+      <div className="relative z-10 flex flex-col items-center justify-center text-center my-auto py-6">
+        {/* $WHOAMI in typewriter font */}
+        <h1
+          aria-label="$WHOAMI"
+          className="font-typewriter text-6xl sm:text-8xl md:text-9xl lg:text-[10vw] font-bold tracking-wider sm:tracking-widest text-white leading-none drop-shadow-[0_0_35px_rgba(255,255,255,0.15)]"
+        >
+          <span aria-hidden="true" className="flex items-center whitespace-nowrap">
+            {LETTERS.map((char, index) => (
+              <span
+                key={index}
+                className="hero-letter inline-block will-change-transform"
+              >
+                {char}
               </span>
-            </div>
+            ))}
 
-            {/* headline hero section */}
-            <div className="space-y-4">
-              <h1 className="text-5xl md: text-6xl lg:text-7xl font-bold leading-tight animate-fade-in aniamte-delay-100 ">
-                Crafting <span className="text-primary glow-text">Digital</span>
-                <br />
-                Experiences with
-                <br />
-                <span className="font-serif italic font-normal text-white">
-                  precision.
-                </span>
-              </h1>
+            {/* Typewriter blinking cursor */}
+            <span className="hero-cursor inline-block font-light ml-1 sm:ml-2 text-white/80 animate-typewriter-blink will-change-transform">
+              _
+            </span>
+          </span>
+        </h1>
 
-              <p className="text-lg text-muted-foreground max-w-lg animate-fade-in animate-delay-200">
-                Hi, I'm Lazaro Estrada, a passionate Jr Full Stack Developer
-                dedicated to crafting seamless digital experiences. With a
-                strong foundation in both front-end and back-end technologies, I
-                specialize in creating responsive and user-friendly web
-                applications. My journey in software engineering is driven by a
-                commitment to continuous learning and a desire to solve complex
-                problems with elegant solutions. Let's build something amazing
-                together!
-              </p>
-            </div>
-
-            {/* ctas */}
-            <div className="flex flex-wrap gap-4 animate-fade-in animate-delay-300">
-              <Button href="#contact" size="lg">
-                Contact Me <ArrowRight className="w-5 h-5" />
-              </Button>
-              <AnimatedBorderButton href="/cv.pdf" download="Lazaro_Estrada_CV.pdf">
-                <Download className="w-5 h-5" /> Download CV
-              </AnimatedBorderButton>
-            </div>
-
-            {/* Social media links */}
-            <div className="flex items-center gap-4 animate-fade-in animate-delay-400">
-              <span className="text-sm text-muted-foreground">Follow me:</span>
-              {socialLinks.map(({ id, href, Icon, label }) => (
-                <a
-                  key={id}
-                  href={href}
-                  target="_blank"
-                  rel="noreferrer"
-                  aria-label={label}
-                  className="p-2 rounded-full glass hover:bg-primary/10 hover:text-primary transition-all duration-300"
-                >
-                  <Icon className="w-5 h-5" />
-                </a>
-              ))}
-            </div>
+        {/* Content below $WHOAMI with generous, elegant spacing */}
+        <div className="hero-content-below mt-8 sm:mt-10 flex flex-col items-center gap-6 sm:gap-7 max-w-2xl px-4 will-change-transform">
+          {/* Developer Role Pill */}
+          <div className="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full border border-[#837062]/30 bg-[#3E1A1C]/20 text-xs sm:text-sm font-mono text-[#F5EFEB]">
+            <Terminal className="w-4 h-4 text-[#C5B2A4]" />
+            <span>Junior Full Stack Developer & Software Engineer</span>
           </div>
 
-          {/* right column -- Profile image */}
-          <div className="relative animate-fade-in animate-delay-300">
-            {/* profile image */}
-            <div className="relative max-w-md mx-auto">
-              <div className="absolute inset-0 rounded-3xl bg-gradient-to-br from-primary/10 blur-2xl animate-pulse " />
-
-              <div className="relative glass rounded-3xl p-2 glow-border">
-                <img
-                  src="/profile-pic.png"
-                  alt="Lazaro Estrada"
-                  className="w-full aspect-[4/5] object-cover rounded-2xl"
-                />
-
-                {/* floating badge */}
-                <div className="absolute -bottom-4 -right-4 glass rounded-xl px-4 py-3 animate-float">
-                  <div className="flex items-center gap-3">
-                    <div className="w-3 h-3 bg-green-500 rounded-full animate-pulse" />
-                    <span className="text-sm font-medium">
-                      Avalabile for work
-                    </span>
-                  </div>
-                </div>
-
-                {/* stats badge */}
-                <div className="absolute -top-4 -left-4 glass rounded-xl px-4 py-3 animate-float animate-delay-500">
-                  <div className="text-xl font-bold text-primary">1+</div>
-                  <div className="text-xs text-muted-foreground">
-                    Years of Experience
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* Skills cloud */}
-        <div className="mt-20 animate-fade-in animate-delay-500">
-          <p className="text-sm text-muted-foreground mb-6 text-center">
-            Tech Stack i work with:
+          {/* Bio Summary */}
+          <p className="font-mono text-xs sm:text-sm md:text-base text-neutral-400 tracking-wide text-center leading-relaxed max-w-lg">
+            Creating responsive, high-performance web applications with clean code and modern architecture.
           </p>
-          <div className="relative overflow-hidden">
-            <div className="flex animate-marquee">
-              {[...skills, ...skills].map((skill, index) => (
-                <div key={index} className="flex-shrink-0 px-8 py-4">
-                  <span className="text-xl font-semibold text-muted-foreground/50 hover:text-muted-foreground">
-                    {skill}
-                  </span>
-                </div>
-              ))}
+
+          {/* Action CTAs and Social Links */}
+          <div className="flex flex-wrap justify-center items-center gap-4 pt-1">
+            <a
+              href="#contact"
+              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg border border-white/20 bg-white/10 hover:bg-white/20 text-xs sm:text-sm font-mono text-white transition-all duration-200 shadow-sm"
+            >
+              <span>Contact Me</span>
+              <ArrowRight className="w-3.5 h-3.5" />
+            </a>
+            <a
+              href="/cv.pdf"
+              download="Lazaro_Estrada_CV.pdf"
+              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg border border-white/10 bg-transparent hover:bg-white/5 hover:border-white/25 text-xs sm:text-sm font-mono text-neutral-300 hover:text-white transition-all duration-200"
+            >
+              <Download className="w-3.5 h-3.5" />
+              <span>Download CV</span>
+            </a>
+            <div className="flex items-center gap-2 pl-2 border-l border-white/10">
+              <a
+                href="https://github.com/FerchoChainz"
+                target="_blank"
+                rel="noreferrer"
+                aria-label="GitHub"
+                className="p-2.5 rounded-lg border border-white/10 text-neutral-400 hover:text-white hover:border-white/25 hover:bg-white/5 transition-all duration-200"
+              >
+                <FiGithub className="w-4 h-4" />
+              </a>
+              <a
+                href="https://www.linkedin.com/in/lazaro-estrada-420b4328a/"
+                target="_blank"
+                rel="noreferrer"
+                aria-label="LinkedIn"
+                className="p-2.5 rounded-lg border border-white/10 text-neutral-400 hover:text-white hover:border-white/25 hover:bg-white/5 transition-all duration-200"
+              >
+                <FiLinkedin className="w-4 h-4" />
+              </a>
             </div>
           </div>
         </div>
       </div>
 
-      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 animate-fade-in animate-delay-600">
-        <a href="#about" className="flex flex-col items-center gap-2 text-muted-foreground hover:text-primary">
-            <span className="text-xs uppercase tracking-wide">Scroll</span>
-            <ChevronDown className="w-6 h-6 animate-bounce"/>
-        </a>     
+      {/* Bottom scroll prompt placed with natural breathing room */}
+      <div className="hero-scroll-prompt hero-aux flex flex-col items-center gap-1.5 text-neutral-500 font-typewriter text-xs tracking-widest">
+        <span className="uppercase text-[10px] tracking-widest text-neutral-400">
+          [ scroll to explore ]
+        </span>
+        <ChevronDown className="w-4 h-4 animate-bounce text-neutral-400" />
       </div>
     </section>
   );

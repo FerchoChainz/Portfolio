@@ -1,238 +1,406 @@
-import { AlertCircle, CheckCircle, Mail, MapPin, Phone, Send } from "lucide-react";
-import { HiRefresh } from "react-icons/hi";
-import { Button } from "../components/Button";
 import { useState } from "react";
+import { 
+  ArrowRight, 
+  CheckCircle2, 
+  AlertCircle, 
+  Copy, 
+  Check, 
+  MapPin, 
+  Mail, 
+  Phone 
+} from "lucide-react";
+import { HiRefresh } from "react-icons/hi";
+import { FiGithub, FiLinkedin } from "react-icons/fi";
 import emailjs from "@emailjs/browser";
 
-const contactInfo = [
-  {
-    icon: Mail,
-    label: "Email",
-    value: "lazaroEstrada99@outlook.com",
-    href: "mailto:lazaroEstrada99@outlook.com",
-  },
-  {
-    icon: Phone,
-    label: "Phone",
-    value: "+52 33 2239 6113",
-    href: "tel:+52 33 2239 6113",
-  },
-  {
-    icon: MapPin,
-    label: "Location",
-    value: "Guadalajara, Jalisco, Mexico",
-    href: "https://www.google.com/maps/place/Guadalajara,+Jalisco,+Mexico/@20.6766766,-103.3475758,12z/data=!3m1!4b1!4m5!3m4!1s0x8428b9cbbd9e7f7:0x1a2b3c4d5e6f7g8h!8m2!3d20.6766766!4d-103.3475758",
-  },
-];
-
 export const Contact = () => {
-
   const [formData, setFormData] = useState({
     name: "",
     email: "",
+    phone: "",
     message: "",
-  })
+  });
 
   const [isLoading, setIsLoading] = useState(false);
+  const [copied, setCopied] = useState(false);
   const [submitStatus, setSubmitStatus] = useState({
     type: null,
     message: "",
-  })
+  });
+
+  const handleCopyEmail = async () => {
+    try {
+      await navigator.clipboard.writeText("lazaroEstrada99@outlook.com");
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    } catch {
+      setSubmitStatus({
+        type: "error",
+        message: "Could not copy the email address. Please use the direct email link below.",
+      });
+    }
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     setIsLoading(true);
     setSubmitStatus({ type: null, message: "" });
-    try{
+
+    try {
       const serviceId = import.meta.env.VITE_EMAILJS_SERVICE_ID;
       const templateId = import.meta.env.VITE_EMAILJS_TEMPLATE_ID;
       const publicKey = import.meta.env.VITE_EMAILJS_PUBLIC_KEY;
-      console.log("serviceId", serviceId);
-      console.log("templateId", templateId);
-      console.log("publicKey", publicKey);
 
+      if (!serviceId || !templateId || !publicKey) {
+        throw new Error("EmailJS configuration is missing in environment variables.");
+      }
 
-    if(!serviceId || !templateId || !publicKey){
-      throw new Error('Emailjs configuration is missing. please check your environment variables.');
-    }
+      await emailjs.send(
+        serviceId,
+        templateId,
+        {
+          name: formData.name,
+          email: formData.email,
+          phone: formData.phone || "Not specified",
+          message: formData.message,
+        },
+        publicKey
+      );
 
-    await emailjs.send(serviceId, templateId, {
-      name: formData.name,
-      email: formData.email,
-      message: formData.message,
-    }, 
-    publicKey);
-
-    setSubmitStatus({
-      type: "success",
-      message: "Your message has been sent successfully! I'll get back to you soon.",
-    });
-
-    setFormData({
-      name: "",
-      email: "",
-      message: "",
-    });
-
-    } catch (error) {
-      console.log("emailjs error", error);
       setSubmitStatus({
-        type: "Error",
-        message: error.text || "There was an error sending your message",
+        type: "success",
+        message: "Message transmitted successfully. I will get back to you shortly.",
+      });
+
+      setFormData({
+        name: "",
+        email: "",
+        phone: "",
+        message: "",
+      });
+    } catch (error) {
+      console.error("EmailJS Error:", error);
+      setSubmitStatus({
+        type: "error",
+        message: error.text || error.message || "An unexpected error occurred while transmitting your message.",
       });
     } finally {
       setIsLoading(false);
     }
-
   };
 
   return (
-    <section id="contact" className="py-32 relative overflow-hidden">
-      <div className="absolute top-0 left-0 w-full h-full">
-        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-primary/5 rounded-full blur-3xl" />
-        <div className="absolute bottom-1/4 right-1/4 w-64 h-64 bg-highlight/5 rounded-full blur-3xl" />
-      </div>
+    <section id="contact" className="relative z-10 isolate scroll-mt-20 bg-[#F5EFEB] text-[#09090B] pt-16 pb-24 sm:pt-28 sm:pb-36 overflow-x-clip">
+      {/* Architectural Ambient Cabernet Glows */}
+      <div className="absolute top-1/3 left-0 w-80 sm:w-[500px] h-80 sm:h-[500px] bg-[#3E1A1C]/10 rounded-full blur-[140px] pointer-events-none -translate-x-1/2" />
+      <div className="absolute bottom-10 right-0 w-72 sm:w-[450px] h-72 sm:h-[450px] bg-[#837062]/5 rounded-full blur-[120px] pointer-events-none translate-x-1/3" />
 
-      <div className="container mx-auto px-6 relative z-10">
-        {/* section header */}
-        <div className="text-center max-w-3xl mx-auto mb-16">
-            <span className="text-secondary-foreground text-sm font-medium tracking-wider uppercase animate-fade-in">Get in touch</span>
-            <h2 className="text-4xl md:text-5xl">
-                Let's build{" "}
-                <span>Something great!</span>
-            </h2>
-            <p>Have a project in mind or want to discuss potential opportunities? Feel free to reach out!</p>
+      <div className="container mx-auto px-4 sm:px-6 md:px-8 max-w-6xl relative z-10">
+        
+        {/* Top Minimalist Editorial Header */}
+        <div className="flex flex-wrap items-center justify-between gap-3 border-b border-neutral-300/80 pb-4 mb-10 sm:mb-16 text-xs font-mono">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-md bg-[#581C24]/10 border border-[#581C24]/25 text-[#4A151B] text-[11px] tracking-widest uppercase font-semibold">
+            <span className="w-1.5 h-1.5 rounded-full bg-[#581C24] animate-pulse" />
+            <span>04 // INQUIRY PROTOCOL</span>
+          </div>
+
+          <div className="hidden sm:block text-[11px] tracking-widest uppercase text-[#52525B]">
+            ESTRADA // SOFTWARE ENGINEERING
+          </div>
+
+          <div className="flex items-center gap-2 text-[11px] text-[#09090B] font-medium bg-black/[0.04] px-2.5 py-1 rounded-md border border-black/10">
+            <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
+            <span className="tracking-wider uppercase text-[10px] sm:text-[11px]">AVAILABLE FOR WORK</span>
+          </div>
         </div>
 
-        <div className="grid lg:grid-cols-2 gap-12 max-w-5xl mx-auto">
-          <div className="glass p-8 rounded-3xl border-primary/30 animate-fade-in animate-delay-300">
-            <form className="space-y-6" onSubmit={handleSubmit}>
+        {/* Main 2-Column Editorial Grid - Open & Fluid */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-start relative z-10">
+          
+          {/* LEFT COLUMN: Iconic Typography + Artwork Lockup */}
+          <div className="lg:col-span-6 flex flex-col justify-between space-y-6 sm:space-y-10">
+            <div>
+              {/* Massive Serif Headline with Geometric Moon & Pendulum Wireframe */}
+              <h2 className="text-4xl sm:text-6xl md:text-7xl lg:text-[5.5rem] font-serif font-normal tracking-tight text-[#09090B] leading-[1.05] sm:leading-[0.95] uppercase">
+                <span className="inline-flex items-center">
+                  <span>LET&apos;S</span>
+                  {/* Geometric Celestial Circle & Wireframe Crescent Graphic */}
+                  <span className="relative inline-flex items-center justify-center align-middle ml-3 sm:ml-5 -mt-1 sm:-mt-2">
+                    {/* The solid circular pearl */}
+                    <span className="w-5 h-5 sm:w-8 sm:h-8 md:w-9 md:h-9 rounded-full bg-[#09090B] shadow-[0_0_20px_rgba(9,9,11,0.25)] block relative z-10" />
+                    
+                    {/* The architectural wireframe pendulum arc */}
+                    <svg
+                      className="absolute -bottom-2.5 sm:-bottom-4 left-1/2 -translate-x-1/2 w-9 sm:w-14 h-7 sm:h-10 pointer-events-none text-neutral-400"
+                      viewBox="0 0 60 40"
+                      fill="none"
+                    >
+                      <path
+                        d="M 5 8 C 15 36, 45 36, 55 8"
+                        stroke="currentColor"
+                        strokeWidth="1.5"
+                        strokeDasharray="2 2"
+                      />
+                      <path
+                        d="M 14 16 C 22 34, 38 34, 46 16"
+                        stroke="currentColor"
+                        strokeWidth="1"
+                        opacity="0.6"
+                      />
+                    </svg>
+                  </span>
+                </span>
+                <span className="block italic text-[#581C24] mt-1.5 sm:mt-2">
+                  GET IN
+                </span>
+                <span className="block mt-1 sm:mt-2 text-[#09090B]">
+                  TOUCH
+                </span>
+              </h2>
 
-              <div>
-                <label htmlFor="name" className="block text-sm font-medium mb-2">Name</label>
-                <input 
-                id="name" 
-                type="text" 
-                className="w-full px-4 py-3 bg-surface border border-border rounded-xl focus:border-primary focus:ring-primary outline-none transition-all"
-                value={formData.name}
-                onChange={(e) => 
-                  setFormData({ ...formData, name: e.target.value})
-                }
-                required
-                placeholder="Enter your name"
-                />
-              </div>
-              <div>
-                <label htmlFor="email" className="block text-sm font-medium mb-2">Email</label>
-                <input
-                id="email" 
-                type="email" 
-                className="w-full px-4 py-3 bg-surface border border-border rounded-xl focus:border-primary focus:ring-primary outline-none transition-all"
-                value={formData.email}
-                onChange={(e) => 
-                  setFormData({ ...formData, email: e.target.value})
-                }
-                required
-                placeholder="your.email@example.com"
-                />
-              </div>
-              <div>
-                <label htmlFor="message" className="block text-sm font-medium mb-2" >Message</label>
-                <textarea 
-                id="message" 
-                type="text" 
-                className="w-full px-4 py-3 bg-surface border border-border rounded-xl focus:border-primary focus:ring-primary outline-none transition-all resize-none"
-                required
-                placeholder="Tell me about your project or opportunity"
-                rows={5}
-                value={formData.message}
-                onChange={(e) => 
-                  setFormData({ ...formData, message: e.target.value})
-                }
-                />
-              </div>
-
-              <Button className="w-full" type="submit" size="lg" disabled={isLoading}>
-
-                {isLoading ? (
-                  <>Sending...</>
-                ) : (
-                  <>
-                  Send Message 
-                  <Send className="w-5 h-5"/>
-                  </>
-                )}
-
-              </Button>
-
-              {submitStatus.type && (
-                <div className={`flex items-center gap-3 p-4 rounded-xl 
-                  ${submitStatus.type === "success"
-                  ? "bg-green-500/10 border border-green-500/20 text-green-400"
-                  : "bg-red-500/10 border border-red-500/20 text-red-400"
-                }`}
-                >
-
-                {submitStatus.type === "success" ? (
-                  <CheckCircle className="w-5 h-5 flex-shrink-0"/>
-                ) : (
-                  <AlertCircle className="w-5 h-5 flex-shrink-0"/>
-                )}
-
-                <p className="text-sm">{submitStatus.message}</p>
-                </div>
-              )}
-
-            </form>
-          </div>
-
-
-          {/* Contact Info */}
-          <div className="space-y-6 animate-fade-in animation-delay-400">
-            <div className="glass rounded-3xl p-8">
-              <h3 className="text-xl font-semibold mb-6">
-                Contact Information
-              </h3>
-              <div className="space-y-4">
-                {contactInfo.map((item, i) => (
-                  <a
-                    key={i}
-                    href={item.href}
-                    className="flex items-center gap-4 p-4 rounded-xl hover:bg-surface transition-colors group"
-                  >
-                    <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center group-hover:bg-primary/20 transition-colors shrink-0">
-                      <item.icon className="w-5 h-5 text-primary" />
-                    </div>
-                    <div className="min-w-0 flex-1">
-                      <div className="text-sm text-muted-foreground">
-                        {item.label}
-                      </div>
-                      <div className="font-medium break-all sm:break-words">{item.value}</div>
-                    </div>
-                  </a>
-                ))}
-              </div>
-            </div>
-
-            {/* Availability Card */}
-            <div className="glass rounded-3xl p-8 border border-primary/30">
-              <div className="flex items-center gap-3 mb-4">
-                <span className="w-3 h-3 bg-green-500 rounded-full animate-pulse" />
-                <span className="font-medium">Currently Available</span>
-              </div>
-              <p className="text-muted-foreground text-sm">
-                I'm currently open to new opportunities and exciting projects.
-                Whether you need a full-time engineer or a freelance consultant,
-                let's talk!
+              <p className="mt-6 sm:mt-8 text-sm sm:text-base text-[#3F3F46] leading-relaxed max-w-md font-normal">
+                Whether you have an ambitious full-stack architecture, an enterprise OCR automation pipeline, or an open engineering role, my inbox is direct and responsive.
               </p>
             </div>
-          </div>
-        
 
+            {/* Direct Copy & Quick Connect Card - Mobile-Safe Layout */}
+            <div className="pt-6 border-t border-neutral-300/80 space-y-3 sm:space-y-4 max-w-md">
+              <div className="flex items-center justify-between text-xs font-mono text-[#52525B]">
+                <span className="font-semibold text-[11px]">DIRECT LINE:</span>
+                <span className="text-[#09090B] font-medium text-[11px]">GMT-6 // GUADALAJARA, MX</span>
+              </div>
+
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-3.5 rounded-lg bg-black/[0.04] border border-black/15 shadow-xs">
+                <span className="text-xs sm:text-sm font-mono text-[#09090B] select-all break-all font-medium">
+                  lazaroEstrada99@outlook.com
+                </span>
+
+                <button
+                  type="button"
+                  onClick={handleCopyEmail}
+                  className="inline-flex items-center justify-center gap-1.5 px-3.5 py-2 rounded-md bg-[#09090B] hover:bg-neutral-800 text-white border border-black text-xs font-mono transition-all cursor-pointer shrink-0 shadow-sm w-full sm:w-auto"
+                >
+                  {copied ? (
+                    <>
+                      <Check className="w-3.5 h-3.5 text-emerald-400" />
+                      <span className="text-emerald-400 font-semibold">COPIED</span>
+                    </>
+                  ) : (
+                    <>
+                      <Copy className="w-3.5 h-3.5" />
+                      <span>COPY EMAIL</span>
+                    </>
+                  )}
+                </button>
+              </div>
+            </div>
+          </div>
+
+          {/* RIGHT COLUMN: Minimalist Underline Form + Metadata Blocks */}
+          <div className="lg:col-span-6 flex flex-col justify-between space-y-8 sm:space-y-12">
+            
+            {/* The Architectural Underline Form */}
+            <form onSubmit={handleSubmit} className="space-y-6 sm:space-y-9">
+              
+              {/* Field 1: FULL NAME */}
+              <div className="group relative border-b border-neutral-300 focus-within:border-[#09090B] transition-colors pb-1">
+                <div className="flex items-center justify-between mb-1.5">
+                  <label 
+                    htmlFor="name" 
+                    className="text-[11px] font-mono tracking-widest text-[#52525B] uppercase group-focus-within:text-[#581C24] transition-colors font-medium"
+                  >
+                    FULL NAME
+                  </label>
+                  <span className="text-xs font-mono text-[#581C24]">•</span>
+                </div>
+                <input
+                  id="name"
+                  type="text"
+                  required
+                  autoComplete="name"
+                  value={formData.name}
+                  onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                  placeholder="Your full name or organization"
+                  className="w-full bg-transparent py-2.5 text-base text-[#09090B] placeholder:text-neutral-400 outline-none font-sans font-normal"
+                />
+              </div>
+
+              {/* Field 2 & 3: EMAIL + PHONE */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                {/* EMAIL */}
+                <div className="group relative border-b border-neutral-300 focus-within:border-[#09090B] transition-colors pb-1">
+                  <div className="flex items-center justify-between mb-1.5">
+                    <label 
+                      htmlFor="email" 
+                      className="text-[11px] font-mono tracking-widest text-[#52525B] uppercase group-focus-within:text-[#581C24] transition-colors font-medium"
+                    >
+                      EMAIL
+                    </label>
+                    <span className="text-xs font-mono text-[#581C24]">•</span>
+                  </div>
+                  <input
+                  id="email"
+                  type="email"
+                  required
+                  autoComplete="email"
+                    value={formData.email}
+                    onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                    placeholder="email@domain.com"
+                    className="w-full bg-transparent py-2.5 text-base text-[#09090B] placeholder:text-neutral-400 outline-none font-sans font-normal"
+                  />
+                </div>
+
+                {/* PHONE */}
+                <div className="group relative border-b border-neutral-300 focus-within:border-[#09090B] transition-colors pb-1">
+                  <div className="flex items-center justify-between mb-1.5">
+                    <label 
+                      htmlFor="phone" 
+                      className="text-[11px] font-mono tracking-widest text-[#52525B] uppercase group-focus-within:text-[#581C24] transition-colors font-medium"
+                    >
+                      PHONE
+                    </label>
+                    <span className="text-[10px] font-mono text-[#71717A] uppercase tracking-wider">OPTIONAL</span>
+                  </div>
+                  <input
+                  id="phone"
+                  type="tel"
+                  autoComplete="tel"
+                    value={formData.phone}
+                    onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                    placeholder="+52 ... / +1 ..."
+                    className="w-full bg-transparent py-2.5 text-base text-[#09090B] placeholder:text-neutral-400 outline-none font-sans font-normal"
+                  />
+                </div>
+              </div>
+
+              {/* Field 4: MESSAGE */}
+              <div className="group relative border-b border-neutral-300 focus-within:border-[#09090B] transition-colors pb-1">
+                <div className="flex items-center justify-between mb-1.5">
+                  <label 
+                    htmlFor="message" 
+                    className="text-[11px] font-mono tracking-widest text-[#52525B] uppercase group-focus-within:text-[#581C24] transition-colors font-medium"
+                  >
+                    MESSAGE
+                  </label>
+                  <span className="text-xs font-mono text-[#581C24]">•</span>
+                </div>
+                <textarea
+                  id="message"
+                  required
+                  rows={4}
+                  value={formData.message}
+                  onChange={(e) => setFormData({ ...formData, message: e.target.value })}
+                  placeholder="Detail your engineering requirements, project goals, or scope..."
+                  className="w-full bg-transparent py-2.5 text-base text-[#09090B] placeholder:text-neutral-400 outline-none resize-none font-sans leading-relaxed font-normal"
+                />
+              </div>
+
+              {/* Action Submit Area with Signature Arrow */}
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pt-2">
+                <p className="text-[11px] font-mono text-[#52525B] max-w-xs leading-normal order-2 sm:order-1">
+                  Sent using EmailJS. I typically respond within 24 hours.
+                </p>
+
+                <button
+                  type="submit"
+                  disabled={isLoading}
+                  className="group inline-flex items-center justify-center sm:justify-start gap-4 px-6 py-3.5 rounded-lg bg-[#09090B] hover:bg-neutral-800 border border-black transition-all duration-300 cursor-pointer shadow-md hover:shadow-lg disabled:opacity-50 disabled:cursor-not-allowed w-full sm:w-fit order-1 sm:order-2"
+                >
+                  <span className="text-xs font-mono tracking-widest text-white uppercase font-semibold">
+                    {isLoading ? "DISPATCHING..." : "SEND INQUIRY"}
+                  </span>
+
+                  <div className="w-9 h-9 rounded-md bg-neutral-900 border border-neutral-700 flex items-center justify-center text-neutral-300 group-hover:bg-[#581C24] group-hover:text-white group-hover:border-[#581C24] group-hover:scale-105 transition-all duration-300">
+                    {isLoading ? (
+                      <HiRefresh className="w-4 h-4 animate-spin" />
+                    ) : (
+                      <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-0.5" />
+                    )}
+                  </div>
+                </button>
+              </div>
+
+              {/* Status Alert Banner */}
+              {submitStatus.type && (
+                <div
+                  className={`p-4 rounded-md border flex items-center gap-3 text-xs font-mono backdrop-blur-md transition-all ${
+                    submitStatus.type === "success"
+                      ? "bg-emerald-50 border-emerald-500/30 text-emerald-900"
+                      : "bg-rose-50 border-rose-500/30 text-rose-900"
+                  }`}
+                >
+                  {submitStatus.type === "success" ? (
+                    <CheckCircle2 className="w-5 h-5 shrink-0 text-emerald-600" />
+                  ) : (
+                    <AlertCircle className="w-5 h-5 shrink-0 text-rose-600" />
+                  )}
+                  <p className="leading-relaxed">{submitStatus.message}</p>
+                </div>
+              )}
+            </form>
+
+            {/* Bottom 2-Column Address & Network Block */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 pt-8 border-t border-neutral-300/80 text-xs font-mono">
+              {/* Column 1: Headquarters */}
+              <div className="p-4 rounded-lg bg-black/[0.03] border border-black/10">
+                <span className="text-[10px] uppercase tracking-widest text-[#581C24] block mb-2.5 font-bold">
+                  HEADQUARTERS // DIRECT
+                </span>
+                <div className="space-y-2 text-[#52525B]">
+                  <p className="text-[#09090B] font-medium flex items-center gap-2">
+                    <MapPin className="w-3.5 h-3.5 text-[#581C24] shrink-0" />
+                    <span>Guadalajara, Jalisco, MX</span>
+                  </p>
+                  <a
+                    href="mailto:lazaroEstrada99@outlook.com"
+                    className="flex items-center gap-2 hover:text-black transition-colors py-0.5"
+                  >
+                    <Mail className="w-3.5 h-3.5 text-[#581C24] shrink-0" />
+                    <span className="break-all">lazaroEstrada99@outlook.com</span>
+                  </a>
+                  <a
+                    href="tel:+523322396113"
+                    className="flex items-center gap-2 hover:text-black transition-colors py-0.5"
+                  >
+                    <Phone className="w-3.5 h-3.5 text-[#581C24] shrink-0" />
+                    <span>+52 33 2239 6113</span>
+                  </a>
+                </div>
+              </div>
+
+              {/* Column 2: Digital Presence & Turnaround */}
+              <div className="p-4 rounded-lg bg-black/[0.03] border border-black/10">
+                <span className="text-[10px] uppercase tracking-widest text-[#581C24] block mb-2.5 font-bold">
+                  DIGITAL NETWORK // TIME
+                </span>
+                <div className="space-y-2 text-[#52525B]">
+                  <a
+                    href="https://github.com/FerchoChainz"
+                    target="_blank"
+                    rel="noreferrer"
+                    className="flex items-center gap-2 hover:text-black transition-colors py-0.5"
+                  >
+                    <FiGithub className="w-3.5 h-3.5 text-[#581C24] shrink-0" />
+                    <span>GitHub: <strong className="text-[#09090B] font-medium">@FerchoChainz</strong></span>
+                  </a>
+                  <a
+                    href="https://www.linkedin.com/in/lazaro-estrada-420b4328a/"
+                    target="_blank"
+                    rel="noreferrer"
+                    className="flex items-center gap-2 hover:text-black transition-colors py-0.5"
+                  >
+                    <FiLinkedin className="w-3.5 h-3.5 text-[#581C24] shrink-0" />
+                    <span>LinkedIn: <strong className="text-[#09090B] font-medium">Lázaro Estrada</strong></span>
+                  </a>
+                  <p className="text-[11px] text-[#71717A] pt-1">
+                    Turnaround: <span className="text-[#581C24] font-semibold">&lt; 24h</span>
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </section>
   );
 };
- 
