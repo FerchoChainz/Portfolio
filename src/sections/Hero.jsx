@@ -167,9 +167,9 @@ export const Hero = () => {
       <div
         role="status"
         aria-live="polite"
-        className="hero-top-badge hero-aux px-4 py-1.5 rounded-full border border-white/10 bg-white/[0.02] text-xs font-mono tracking-widest text-neutral-400 flex items-center gap-2"
+        className="hero-top-badge hero-aux px-4 py-1.5 rounded-full border border-[#837062]/25 bg-[#1A1B1D]/80 text-xs font-mono tracking-widest text-[#9A8B80] flex items-center gap-2"
       >
-        <span className="inline-block w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+        <span className="inline-block w-2 h-2 rounded-full bg-[#C5B2A4] animate-pulse" />
         <span>PORTFOLIO // ENG. LAZARO ESTRADA</span>
       </div>
 
@@ -200,8 +200,8 @@ export const Hero = () => {
         {/* Content below $WHOAMI with generous, elegant spacing */}
         <div className="hero-content-below mt-8 sm:mt-10 flex flex-col items-center gap-6 sm:gap-7 max-w-2xl px-4 will-change-transform">
           {/* Developer Role Pill */}
-          <div className="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full border border-white/15 bg-white/[0.04] text-xs sm:text-sm font-mono text-neutral-300">
-            <Terminal className="w-4 h-4 text-emerald-400" />
+          <div className="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full border border-[#837062]/30 bg-[#3E1A1C]/20 text-xs sm:text-sm font-mono text-[#F5EFEB]">
+            <Terminal className="w-4 h-4 text-[#C5B2A4]" />
             <span>Junior Full Stack Developer & Software Engineer</span>
           </div>
 

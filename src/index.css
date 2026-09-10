@@ -1,27 +1,38 @@
 @import "tailwindcss";
 
-/* Define theme variables */
+/* Define theme variables from image.png palette */
 @theme {
-  --color-background: #0f1418;
-  --color-foreground: #f0f2f5;
+  --color-background: #141517;
+  --color-foreground: #f5efeb;
 
-  --color-card: #141a1f;
+  --color-card: #1a1b1d;
+  --color-surface: #202226;
 
-  --color-primary: #20b2a6;
-  --color-primary-foreground: #ffffff;
+  --color-primary: #c5b2a4;
+  --color-primary-foreground: #141517;
 
-  --color-secondary: #1f2830;
-  --color-secondary-foreground: #20b2a6;
+  --color-secondary: #3e1a1c;
+  --color-secondary-foreground: #c5b2a4;
 
-  --color-muted: #252e37;
-  --color-muted-foreground: #7a8491;
+  --color-muted: #26272b;
+  --color-muted-foreground: #9a8b80;
 
-  --color-border: #242b32;
+  --color-border: #353332;
+
+  --color-highlight: #837062;
+
+  /* Custom palette tokens from image.png */
+  --color-oyster: #c5b2a4;
+  --color-oyster-light: #dfd3c8;
+  --color-taupe: #837062;
+  --color-taupe-light: #a49183;
+  --color-cabernet: #3e1a1c;
+  --color-cabernet-light: #5a262a;
+  --color-cabernet-rich: #6e2c31;
+  --color-eclipse: #1a1b1d;
+  --color-eclipse-dark: #141517;
 
   --radius: 0.75rem;
-
-  --color-highlight: #f5a623;
-  --color-surface: #1a2329;
 }
 
 @layer base{
@@ -35,7 +46,7 @@
     font-family: 'Inter', sans-serif;
   }
 
-  .font-seif{
+  .font-serif{
     font-family: 'Playfair Display', serif;
   }
 
@@ -46,26 +57,26 @@
 
 @layer components{
   .glass{
-    background-color: color-mix(in srgb, var(--color-surface) 50%, transparent);
+    background-color: color-mix(in srgb, var(--color-surface) 70%, transparent);
     backdrop-filter: blur(16px);
-    border: 1px solir color-mix(in srgb, var(--color-border) 50%, transparent);
+    border: 1px solid color-mix(in srgb, var(--color-taupe) 20%, transparent);
   }
 
   .glass-strong{
-    background-color: color-mix(in srgb, var(--color-surface) 80%, transparent);
-    backdrop-filter: blur(16px);
-    border: 1px solid color-mix(in srgb, var(--color-border) 60%, transparent);
+    background-color: color-mix(in srgb, var(--color-surface) 90%, transparent);
+    backdrop-filter: blur(20px);
+    border: 1px solid color-mix(in srgb, var(--color-taupe) 32%, transparent);
   }
 
   .glow-text{
     text-shadow: 0 0 30px
-      color-mix(in srgb, var(--color-primary) 80%, transparent);
+      color-mix(in srgb, var(--color-primary) 60%, transparent);
   }
 
   .glow-border{
-    box-shadow: 0 0 20px
-      color-mix(in srgb, var(--color-primary) 20%, transparent),
-      inset 0 0 20px color-mix(in srgb, var(--color-primary) 5%, transparent)
+    box-shadow: 0 0 25px
+      color-mix(in srgb, var(--color-cabernet) 35%, transparent),
+      inset 0 0 15px color-mix(in srgb, var(--color-primary) 5%, transparent);
   }
 } 
 
@@ -174,7 +185,7 @@
   
 
   .animated-border:hover{
-    background-color: color-mix(in srgb, #26c4b8 20%, transparent);
+    background-color: color-mix(in srgb, var(--color-primary) 15%, transparent);
   }
 
   .timeline-glow{
