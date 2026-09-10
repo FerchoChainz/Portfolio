@@ -58,101 +58,95 @@ export const Hero = () => {
           "-=0.4"
         );
 
-      // 2. Scroll-driven animation ONLY on desktop screens (>= 768px)
-      // On mobile devices, pinning with pinSpacing:false causes sections below (#about)
-      // to be trapped under Hero or push down with translateY, causing sections to disappear
-      // when navigating to #contact and returning.
-      const mm = gsap.matchMedia();
+      // 2. Scroll-driven animation with GSAP ScrollTrigger
+      const scrollTl = gsap.timeline({
+        scrollTrigger: {
+          trigger: heroRef.current,
+          start: "top top",
+          end: "+=115%",
+          pin: true,
+          pinSpacing: false,
+          scrub: 0.6,
+          anticipatePin: 1,
+          invalidateOnRefresh: true,
+        },
+      });
 
-      mm.add("(min-width: 768px)", () => {
-        const scrollTl = gsap.timeline({
-          scrollTrigger: {
-            trigger: heroRef.current,
-            start: "top top",
-            end: "+=100%",
-            pin: true,
-            pinSpacing: false,
-            scrub: 0.6,
-            anticipatePin: 1,
-            invalidateOnRefresh: true,
-          },
-        });
+      // Bottom scroll prompt fades out promptly once scrolling begins
+      scrollTl.to(
+        ".hero-scroll-prompt",
+        { opacity: 0, y: 15, duration: 0.12, ease: "power1.out" },
+        0
+      );
 
-        // Bottom scroll prompt fades out promptly once scrolling begins
-        scrollTl.to(
-          ".hero-scroll-prompt",
-          { opacity: 0, y: 15, duration: 0.12, ease: "power1.out" },
-          0
-        );
+      // Top indicator fades as letters and content ascend
+      scrollTl.to(
+        ".hero-top-badge",
+        { opacity: 0, y: -15, duration: 0.2, ease: "power1.out" },
+        0.15
+      );
 
-        // Letters and cursor fly UP to top of screen sequentially
-        scrollTl.to(
-          ".hero-letter, .hero-cursor",
+      // Letters and cursor fly UP to top of screen sequentially
+      // Finishes flight by ~0.50 of the timeline
+      scrollTl.to(
+        ".hero-letter, .hero-cursor",
+        {
+          y: () => -window.innerHeight * 0.9,
+          stagger: { each: 0.04, ease: "power1.in" },
+          ease: "power2.in",
+          duration: 0.5,
+        },
+        0.05
+      );
+
+      // Letters and cursor fade out as they reach the top margin
+      scrollTl.to(
+        ".hero-letter, .hero-cursor",
+        {
+          opacity: 0,
+          stagger: { each: 0.04, ease: "power1.in" },
+          ease: "power2.in",
+          duration: 0.2,
+        },
+        0.35
+      );
+
+      // Information block ascends with the scroll, staying visible until near the top
+      scrollTl
+        .to(
+          ".hero-content-below",
           {
-            y: () => -window.innerHeight * 0.9,
-            stagger: { each: 0.04, ease: "power1.in" },
+            y: () => -window.innerHeight * 0.85,
             ease: "power2.in",
             duration: 0.5,
           },
           0.05
-        );
-
-        // Letters and cursor fade out as they reach the top margin
-        scrollTl.to(
-          ".hero-letter, .hero-cursor",
+        )
+        .to(
+          ".hero-content-below",
           {
             opacity: 0,
-            stagger: { each: 0.04, ease: "power1.in" },
             ease: "power2.in",
             duration: 0.2,
           },
-          0.35
+          0.32
         );
 
-        // Information block ascends with the scroll, staying visible until near the top
-        scrollTl
-          .to(
-            ".hero-content-below",
-            {
-              y: () => -window.innerHeight * 0.85,
-              ease: "power2.in",
-              duration: 0.5,
-            },
-            0.05
-          )
-          .to(
-            ".hero-content-below",
-            {
-              opacity: 0,
-              ease: "power2.in",
-              duration: 0.2,
-            },
-            0.32
-          );
-
-        // Slide #about smoothly into view on desktop
-        const aboutEl = document.querySelector("#about");
-        if (aboutEl) {
-          scrollTl.fromTo(
-            aboutEl,
-            { y: () => window.innerHeight * 0.4 },
-            {
-              y: 0,
-              ease: "power2.out",
-              duration: 0.4,
-            },
-            0.6
-          );
-        }
-      });
-
-      mm.add("(max-width: 767px)", () => {
-        // On mobile, ensure #about is in clean document flow without translations
-        const aboutEl = document.querySelector("#about");
-        if (aboutEl) {
-          gsap.set(aboutEl, { clearProps: "transform,y" });
-        }
-      });
+      // Hold #about off-screen while the hero animation finishes,
+      // leave a small breathing space (~0.52 to 0.60), then slide #about smoothly into view
+      const aboutEl = document.querySelector("#about");
+      if (aboutEl) {
+        scrollTl.fromTo(
+          aboutEl,
+          { y: () => window.innerHeight * 0.45 },
+          {
+            y: 0,
+            ease: "power2.out",
+            duration: 0.4,
+          },
+          0.6
+        );
+      }
     },
     { scope: heroRef }
   );
