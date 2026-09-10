@@ -35,8 +35,8 @@ function App() {
         <About/>
         <Projects/>
         <Experience/>
-        <Contact/>
       </div>
+      <Contact/>
     </main>
     <Footer/>
   </div>

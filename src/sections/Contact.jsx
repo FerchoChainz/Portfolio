@@ -90,7 +90,7 @@ export const Contact = () => {
   };
 
   return (
-    <section id="contact" className="relative z-10 bg-transparent text-[#09090B] pt-16 pb-24 sm:pt-28 sm:pb-36 overflow-hidden">
+    <section id="contact" className="relative z-10 scroll-mt-20 bg-[#F5EFEB] text-[#09090B] pt-16 pb-24 sm:pt-28 sm:pb-36 overflow-hidden">
       {/* Architectural Ambient Cabernet Glows */}
       <div className="absolute top-1/3 left-0 w-80 sm:w-[500px] h-80 sm:h-[500px] bg-[#3E1A1C]/10 rounded-full blur-[140px] pointer-events-none -translate-x-1/2" />
       <div className="absolute bottom-10 right-0 w-72 sm:w-[450px] h-72 sm:h-[450px] bg-[#837062]/5 rounded-full blur-[120px] pointer-events-none translate-x-1/3" />
