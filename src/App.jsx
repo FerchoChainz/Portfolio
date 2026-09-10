@@ -12,10 +12,12 @@ function App() {
     <Navbar/>
     <main className="relative bg-black">
       <Hero/>
-      <About/>
-      <Projects/>
-      <Experience/>
-      <Contact/>
+      <div className="relative bg-gradient-to-b from-[#000000] via-[#121316] via-15% via-[#1c1e24] via-35% via-[#383b46] via-55% via-[#6c7080] via-72% via-[#b4b7c4] via-88% to-[#ffffff]">
+        <About/>
+        <Projects/>
+        <Experience/>
+        <Contact/>
+      </div>
     </main>
     <Footer/>
   </div>
