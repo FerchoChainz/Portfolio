@@ -1,4 +1,5 @@
 import { FiGithub, FiLinkedin } from "react-icons/fi";
+import { Terminal } from "lucide-react";
 
 const socialLinks = [
   { icon: FiGithub, href: "https://github.com/FerchoChainz", label: "GitHub" },
@@ -16,26 +17,35 @@ export const Footer = () => {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="py-12 bg-[#141517] text-[#F5EFEB] border-t border-[#837062]/20">
-      <div className="container mx-auto px-6">
+    <footer className="py-14 bg-white text-[#141517] border-t border-zinc-200 relative z-10">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-6xl">
         <div className="flex flex-col md:flex-row items-center justify-between gap-8">
-          {/* Logo & Copyright */}
-          <div className="text-center md:text-left">
-            <a href="#" className="text-xl font-bold tracking-tight font-serif text-[#F5EFEB]">
-              LE<span className="text-[#C5B2A4]">.</span>
+          
+          {/* Logo & Brand Info */}
+          <div className="text-center md:text-left space-y-2">
+            <a
+              href="#"
+              className="inline-flex items-center gap-2 font-mono text-sm tracking-wider text-[#141517] hover:text-[#3E1A1C] transition-colors"
+            >
+              <div className="w-7 h-7 rounded-md bg-zinc-100 border border-zinc-300 flex items-center justify-center text-zinc-900 shadow-sm">
+                <Terminal className="w-3.5 h-3.5" />
+              </div>
+              <span className="font-bold tracking-widest text-[#141517]">LESTRADA</span>
+              <span className="text-[10px] text-zinc-500 font-normal">// SOFTWARE ENGINEER</span>
             </a>
-            <p className="text-xs font-mono text-[#9A8B80] mt-2">
-              © {currentYear} Lázaro Estrada. Engineered with architectural precision.
+
+            <p className="text-xs font-mono text-zinc-600">
+              © {currentYear} Lázaro Estrada. Built with architectural discipline & clean code.
             </p>
           </div>
 
-          {/* Links */}
+          {/* Navigation Links */}
           <nav className="flex flex-wrap justify-center gap-6 text-xs font-mono">
             {footerLinks.map((link) => (
               <a
                 key={link.href}
                 href={link.href}
-                className="text-[#9A8B80] hover:text-[#C5B2A4] transition-colors uppercase tracking-wider"
+                className="text-zinc-600 hover:text-[#141517] transition-colors uppercase tracking-wider font-medium"
               >
                 {link.label}
               </a>
@@ -43,7 +53,7 @@ export const Footer = () => {
           </nav>
 
           {/* Social Links */}
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2.5">
             {socialLinks.map((social) => (
               <a
                 key={social.label}
@@ -51,12 +61,13 @@ export const Footer = () => {
                 target="_blank"
                 rel="noreferrer"
                 aria-label={social.label}
-                className="p-2.5 rounded-xl border border-[#837062]/30 text-[#9A8B80] hover:text-[#F5EFEB] hover:border-[#C5B2A4] hover:bg-[#3E1A1C]/40 transition-all"
+                className="p-2.5 rounded-md border border-zinc-300 text-zinc-700 hover:text-black hover:border-zinc-800 hover:bg-zinc-100 transition-all shadow-sm"
               >
                 <social.icon className="w-4 h-4" />
               </a>
             ))}
           </div>
+
         </div>
       </div>
     </footer>
