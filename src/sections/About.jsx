@@ -1,248 +1,185 @@
 import { 
   Sparkles, 
-  Brain, 
   Code2, 
-  Terminal, 
   Briefcase, 
   TrendingUp, 
-  CheckCircle2, 
   MapPin, 
   Calendar, 
   ArrowUpRight, 
-  Download, 
-  Zap, 
-  BookOpen, 
-  Layers,
-  Workflow,
-  Cpu
+  Download
 } from "lucide-react";
 import { FiGithub, FiLinkedin } from "react-icons/fi";
-import { 
-  SiReact, 
-  SiTypescript, 
-  SiJavascript, 
-  SiTailwindcss, 
-  SiAngular, 
-  SiNodedotjs, 
-  SiExpress, 
-  SiPython, 
-  SiFlask, 
-  SiLaravel, 
-  SiGo, 
-  SiDocker, 
-  SiGit 
-} from "react-icons/si";
+import { CurvedSkillsCarousel } from "../components/CurvedSkillsCarousel";
 
 const experiences = [
   {
-    period: "2025 - Present",
+    period: "2025 — PRESENT",
     role: "Freelance Software Developer",
-    company: "Self-employed",
-    badge: "Active",
+    company: "Self-employed // Client Solutions",
+    badge: "Active Engagement",
     description:
-      "Developing end-to-end web applications, robust RESTful APIs, and custom automation workflows. Collaborating directly with clients to translate business requirements into performant, modern digital solutions.",
-    technologies: ["React", "Angular", "Laravel", "Express", "Tailwind CSS", "AI Tools"],
+      "Architecting bespoke full-stack web platforms, robust RESTful API architectures, and automated data scripts. Collaborating directly with stakeholders from discovery to production to deliver maintainable, performant systems.",
+    technologies: ["React", "Angular", "Laravel", "Express", "Tailwind CSS", "AI Tooling"],
     current: true,
   },
   {
-    period: "2024 - 2025",
+    period: "2024 — 2025",
     role: "Backend Developer Jr",
-    company: "H2O Beborn",
-    badge: "System Automation",
+    company: "H2O Beborn // Systems Engineering",
+    badge: "Enterprise Automation",
     description:
-      "Engineered an enterprise Optical Character Recognition (OCR) pipeline to extract critical information from scanned documentation, eliminating manual data entry bottlenecks and boosting internal process velocity.",
+      "Engineered an automated Optical Character Recognition (OCR) pipeline to extract structured data from scanned documents. Replaced manual document workflows with an automated Python & Docker service, accelerating enterprise data ingestion.",
     technologies: ["Python", "Flask", "PaddleOCR", "Docker", "REST APIs"],
     current: false,
   },
 ];
 
-const skillCategories = [
+const aiWorkflowPhases = [
   {
-    title: "Frontend & UI",
-    skills: [
-      { name: "React 19", icon: SiReact, color: "text-[#61DAFB]" },
-      { name: "TypeScript", icon: SiTypescript, color: "text-[#3178C6]" },
-      { name: "JavaScript", icon: SiJavascript, color: "text-[#F7DF1E]" },
-      { name: "Tailwind CSS", icon: SiTailwindcss, color: "text-[#06B6D4]" },
-      { name: "Angular", icon: SiAngular, color: "text-[#DD0031]" },
-    ],
+    phase: "PHASE 01",
+    title: "Rapid Architecture & Prototyping",
+    description:
+      "Transforming functional specs into working component contracts, data schemas, and UI prototypes at high velocity.",
   },
   {
-    title: "Backend & Systems",
-    skills: [
-      { name: "Python", icon: SiPython, color: "text-[#3776AB]" },
-      { name: "Flask", icon: SiFlask, color: "text-neutral-200" },
-      { name: "Node.js", icon: SiNodedotjs, color: "text-[#5FA04E]" },
-      { name: "Express", icon: SiExpress, color: "text-neutral-300" },
-      { name: "Laravel", icon: SiLaravel, color: "text-[#FF2D20]" },
-      { name: "Go", icon: SiGo, color: "text-[#00ADD8]" },
-    ],
+    phase: "PHASE 02",
+    title: "Automated Auditing & Mutation Tests",
+    description:
+      "Leveraging AI copilots to spot edge-cases, enforce type safety, and generate rigorous unit tests before deployment.",
   },
   {
-    title: "AI & Intelligent Tooling",
-    skills: [
-      { name: "AI-Augmented Dev", icon: Sparkles, color: "text-primary" },
-      { name: "Context & Prompt Eng.", icon: Brain, color: "text-emerald-400" },
-      { name: "PaddleOCR / Vision", icon: Cpu, color: "text-cyan-400" },
-      { name: "Agentic Workflows", icon: Workflow, color: "text-amber-400" },
-    ],
-  },
-  {
-    title: "DevOps & Core Tools",
-    skills: [
-      { name: "Docker", icon: SiDocker, color: "text-[#2496ED]" },
-      { name: "Git & GitHub", icon: SiGit, color: "text-[#F05032]" },
-      { name: "REST APIs", icon: Layers, color: "text-primary" },
-      { name: "Linux / Bash", icon: Terminal, color: "text-neutral-300" },
-    ],
+    phase: "PHASE 03",
+    title: "Cognitive Acceleration & Flow",
+    description:
+      "Context-engineered prompt workflows eliminate boilerplate friction, keeping focus on core algorithmic design.",
   },
 ];
 
-const aiBenefits = [
-  {
-    icon: Zap,
-    title: "Accelerated Iteration",
-    description: "Rapid prototyping, automating boilerplate, and cutting turnaround times.",
-  },
-  {
-    icon: Brain,
-    title: "Contextual Problem Solving",
-    description: "Architecting structured prompts & agent workflows for complex edge-cases.",
-  },
-  {
-    icon: Code2,
-    title: "Code Quality & Audits",
-    description: "AI-assisted refactoring, automated unit tests, and performance reviews.",
-  },
-  {
-    icon: Workflow,
-    title: "Streamlined Pipelines",
-    description: "Automating repetitive dev tasks to focus on high-impact architecture.",
-  },
-];
-
-const learningFocus = [
-  "Agentic AI Frameworks & Tooling",
-  "React 19 & Tailwind v4 Ecosystems",
-  "High-Concurrency Patterns in Go",
-  "Microservices & Cloud Deployments",
+const learningFrontiers = [
+  { label: "Active Exploration", tech: "React 19 & Modern Web Standards (Actions, Transitions)" },
+  { label: "Deep Dive", tech: "Agentic AI Frameworks & Tool-Calling Architectures" },
+  { label: "System Craft", tech: "Concurrency & High-Throughput Patterns in Go" },
+  { label: "Architecture", tech: "Containerized Microservices & Scalable Cloud Services" },
 ];
 
 export const About = () => {
   return (
-    <section id="about" className="relative z-10 bg-black pt-24 pb-28 sm:py-32 overflow-hidden">
-      {/* Subtle background glow orbs */}
-      <div className="absolute top-1/4 left-1/4 w-[500px] h-[500px] bg-primary/5 rounded-full blur-3xl pointer-events-none -translate-x-1/2" />
-      <div className="absolute bottom-1/4 right-1/4 w-[450px] h-[450px] bg-highlight/5 rounded-full blur-3xl pointer-events-none translate-x-1/2" />
+    <section id="about" className="relative z-10 bg-[#141517] text-[#F5EFEB] pt-20 pb-24 sm:pt-28 sm:pb-32 overflow-hidden border-t border-[#837062]/15">
+      {/* Subtle architectural ambient lights using Cabernet Velvet and Oyster Silk */}
+      <div className="absolute top-1/4 left-1/4 w-80 sm:w-[550px] h-80 sm:h-[550px] bg-[#3E1A1C]/25 rounded-full blur-[140px] pointer-events-none -translate-x-1/2" />
+      <div className="absolute bottom-1/4 right-1/4 w-72 sm:w-[500px] h-72 sm:h-[500px] bg-[#837062]/10 rounded-full blur-[120px] pointer-events-none translate-x-1/2" />
 
       <div className="container mx-auto px-4 sm:px-6 relative z-10">
         
-        {/* Section Header */}
+        {/* Section Header - Editorial / Monograph Style */}
         <div className="max-w-3xl mb-12 sm:mb-16">
-          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-primary/20 bg-primary/5 text-primary text-xs font-mono tracking-wider uppercase mb-4">
-            <Terminal className="w-3.5 h-3.5" />
-            <span>About Me // Profile & Core Stack</span>
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-[#837062]/30 bg-[#3E1A1C]/20 text-[#C5B2A4] text-xs font-mono tracking-widest uppercase mb-4">
+            <span className="w-1.5 h-1.5 rounded-full bg-[#C5B2A4]" />
+            <span>01 // IDENTITY & ARCHITECTURE</span>
           </div>
 
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold leading-tight text-white">
-            Engineering scalable systems,{" "}
-            <span className="font-serif italic font-normal text-primary">
-              amplified by modern AI & continuous growth.
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold leading-tight tracking-tight text-[#F5EFEB]">
+            Engineering with architectural rigor,{" "}
+            <span className="font-serif italic font-normal text-[#C5B2A4] block sm:inline">
+              elevated by modern AI & continuous craft.
             </span>
           </h2>
 
-          <p className="mt-4 text-muted-foreground text-sm sm:text-base md:text-lg leading-relaxed">
-            I am a full-stack software developer who combines fundamental engineering principles with
-            modern AI-driven workflows. Here is a look at my profile, career milestones, and technical skillset.
+          <p className="mt-4 text-[#9A8B80] text-sm sm:text-base md:text-lg leading-relaxed font-normal">
+            Software development is an evolving dialogue between solid computer science foundations and cutting-edge tooling.
+            Here is an authentic look at my profile, career milestones, and technical competencies.
           </p>
         </div>
 
-        {/* ================= BENTO GRID ================= */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-6">
+        {/* ================= BESPOKE BENTO GRID ================= */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-5 sm:gap-6">
 
-          {/* 1. PORTRAIT & PROFILE CARD (Span 4 cols, 2 rows on LG) */}
-          <div className="lg:col-span-4 lg:row-span-2 glass rounded-3xl p-6 sm:p-7 border border-white/10 hover:border-primary/40 transition-all duration-300 flex flex-col justify-between group shadow-xl">
-            <div>
+          {/* 1. EDITORIAL PORTRAIT & PROFILE (Span 4 cols, 2 rows on LG) */}
+          <div className="col-span-1 md:col-span-2 lg:col-span-4 lg:row-span-2 bg-[#1A1B1D] rounded-3xl p-5 sm:p-6 lg:p-7 border border-[#837062]/25 hover:border-[#C5B2A4]/50 transition-all duration-300 flex flex-col justify-between group shadow-2xl relative overflow-hidden">
+            {/* Subtle corner accent */}
+            <div className="absolute top-0 right-0 w-32 h-32 bg-[#3E1A1C]/20 rounded-full blur-2xl pointer-events-none" />
+
+            <div className="flex flex-col md:flex-row lg:flex-col gap-6 items-center md:items-start lg:items-stretch">
               {/* Photo Container */}
-              <div className="relative aspect-square w-full rounded-2xl overflow-hidden mb-6 bg-surface/50 border border-white/10 group-hover:border-primary/40 transition-colors">
+              <div className="relative aspect-square w-48 sm:w-56 md:w-52 lg:w-full shrink-0 rounded-2xl overflow-hidden bg-[#141517] border border-[#837062]/30 group-hover:border-[#C5B2A4]/40 transition-colors shadow-xl">
                 <img
                   src="/profile-pic.png"
                   alt="Lazaro Estrada - Software Engineer"
-                  className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500"
+                  className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-700 ease-out"
                   loading="lazy"
                   decoding="async"
                 />
 
-                {/* Ambient photo overlays */}
-                <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/20 to-transparent pointer-events-none" />
+                {/* Editorial Vignette Overlay */}
+                <div className="absolute inset-0 bg-gradient-to-t from-[#141517] via-transparent to-transparent opacity-85 pointer-events-none" />
 
-                {/* Floating Availability Badge */}
-                <div className="absolute top-3 left-3 px-3 py-1 rounded-full glass-strong border border-emerald-500/30 flex items-center gap-2 text-xs font-mono text-emerald-400 shadow-md">
-                  <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-                  <span>Available for Work</span>
+                {/* Subtle Status Pill */}
+                <div className="absolute top-3 left-3 px-3 py-1 rounded-full bg-[#1A1B1D]/80 backdrop-blur-md border border-[#837062]/30 flex items-center gap-2 text-[11px] font-mono text-[#C5B2A4] shadow-lg">
+                  <span className="w-1.5 h-1.5 rounded-full bg-[#C5B2A4] animate-pulse" />
+                  <span>AVAILABLE FOR WORK</span>
                 </div>
 
-                {/* Location / Meta on Image */}
-                <div className="absolute bottom-3 left-3 right-3 flex items-center justify-between text-xs font-mono text-neutral-300">
-                  <span className="flex items-center gap-1.5 bg-black/60 backdrop-blur-md px-2.5 py-1 rounded-md border border-white/10">
-                    <MapPin className="w-3.5 h-3.5 text-primary" />
+                {/* Location Meta */}
+                <div className="absolute bottom-3 left-3 right-3 flex items-center justify-between text-[11px] font-mono text-[#C5B2A4]">
+                  <span className="flex items-center gap-1.5 bg-[#141517]/85 backdrop-blur-md px-2.5 py-1 rounded-md border border-[#837062]/30">
+                    <MapPin className="w-3 h-3 text-[#C5B2A4]" />
                     Guadalajara, MX
                   </span>
-                  <span className="bg-black/60 backdrop-blur-md px-2.5 py-1 rounded-md border border-white/10 text-neutral-400">
-                    Full-Stack
+                  <span className="bg-[#141517]/85 backdrop-blur-md px-2.5 py-1 rounded-md border border-[#837062]/30 text-[#9A8B80]">
+                    FULL-STACK
                   </span>
                 </div>
               </div>
 
-              {/* Bio Details */}
-              <div className="space-y-3">
-                <div className="flex items-center justify-between">
-                  <h3 className="text-2xl font-bold text-white tracking-tight">Lázaro Estrada</h3>
-                  <span className="text-xs font-mono text-primary bg-primary/10 px-2 py-0.5 rounded border border-primary/20">
-                    Eng.
-                  </span>
+              {/* Persona Details */}
+              <div className="w-full space-y-3 text-center md:text-left">
+                <div className="flex items-center justify-center md:justify-between">
+                  <div className="flex items-baseline gap-2">
+                    <h3 className="text-2xl font-bold tracking-tight text-[#F5EFEB]">Lázaro Estrada</h3>
+                    <span className="font-serif italic text-xs text-[#C5B2A4]">eng.</span>
+                  </div>
                 </div>
 
-                <p className="text-xs font-mono text-neutral-400">
-                  Junior Full Stack Developer & Software Engineer
+                <p className="text-xs font-mono tracking-wider text-[#9A8B80] uppercase">
+                  Software Engineer & Full-Stack Builder
                 </p>
 
-                <p className="text-muted-foreground text-sm leading-relaxed pt-2">
-                  Passionate about building performant applications, clean architectures, and automated data pipelines. Driven by a builder mindset and dedication to clean, maintainable craftsmanship.
+                <p className="text-[#9A8B80] text-xs sm:text-sm leading-relaxed pt-1">
+                  Focused on software quality, robust backend architectures, and human-centered design. I unite solid engineering principles with modern AI velocity to solve complex challenges.
                 </p>
-              </div>
 
-              {/* Quick Highlight Metrics */}
-              <div className="grid grid-cols-2 gap-2 pt-5">
-                <div className="bg-surface/50 border border-white/5 rounded-xl p-3 text-center">
-                  <div className="text-lg font-bold text-primary">2+</div>
-                  <div className="text-[11px] font-mono text-muted-foreground uppercase">Years Coding</div>
-                </div>
-                <div className="bg-surface/50 border border-white/5 rounded-xl p-3 text-center">
-                  <div className="text-lg font-bold text-emerald-400">100%</div>
-                  <div className="text-[11px] font-mono text-muted-foreground uppercase">Commitment</div>
+                {/* Metric Strips */}
+                <div className="grid grid-cols-2 gap-2.5 pt-3">
+                  <div className="bg-[#141517]/80 border border-[#837062]/20 rounded-xl p-3 text-center">
+                    <div className="font-serif text-2xl font-normal text-[#C5B2A4]">02+</div>
+                    <div className="text-[10px] font-mono text-[#9A8B80] uppercase tracking-wider mt-0.5">Years Coding</div>
+                  </div>
+                  <div className="bg-[#141517]/80 border border-[#837062]/20 rounded-xl p-3 text-center">
+                    <div className="font-serif text-2xl font-normal text-[#C5B2A4]">100%</div>
+                    <div className="text-[10px] font-mono text-[#9A8B80] uppercase tracking-wider mt-0.5">Dedication</div>
+                  </div>
                 </div>
               </div>
             </div>
 
             {/* Actions & Links */}
-            <div className="pt-6 mt-6 border-t border-white/10 flex items-center justify-between gap-3">
+            <div className="pt-5 mt-6 border-t border-[#837062]/20 flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3">
               <a
                 href="/cv.pdf"
                 download="Lazaro_Estrada_CV.pdf"
-                className="flex-1 inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl border border-primary/30 bg-primary/10 hover:bg-primary/20 text-xs sm:text-sm font-mono text-primary hover:text-white transition-all duration-200"
+                className="flex-1 inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-[#3E1A1C] hover:bg-[#582428] text-xs sm:text-sm font-mono tracking-wider text-[#F5EFEB] border border-[#837062]/30 transition-all duration-200 shadow-md"
               >
-                <Download className="w-3.5 h-3.5" />
-                <span>Download CV</span>
+                <Download className="w-3.5 h-3.5 text-[#C5B2A4]" />
+                <span>DOWNLOAD CV</span>
               </a>
 
-              <div className="flex items-center gap-2">
+              <div className="flex items-center justify-center gap-2">
                 <a
                   href="https://github.com/FerchoChainz"
                   target="_blank"
                   rel="noreferrer"
                   aria-label="GitHub Profile"
-                  className="p-2.5 rounded-xl border border-white/10 text-neutral-400 hover:text-white hover:border-primary/40 hover:bg-white/5 transition-all"
+                  className="p-2.5 rounded-xl border border-[#837062]/30 text-[#9A8B80] hover:text-[#F5EFEB] hover:border-[#C5B2A4]/50 hover:bg-[#3E1A1C]/30 transition-all"
                 >
                   <FiGithub className="w-4 h-4" />
                 </a>
@@ -251,7 +188,7 @@ export const About = () => {
                   target="_blank"
                   rel="noreferrer"
                   aria-label="LinkedIn Profile"
-                  className="p-2.5 rounded-xl border border-white/10 text-neutral-400 hover:text-white hover:border-primary/40 hover:bg-white/5 transition-all"
+                  className="p-2.5 rounded-xl border border-[#837062]/30 text-[#9A8B80] hover:text-[#F5EFEB] hover:border-[#C5B2A4]/50 hover:bg-[#3E1A1C]/30 transition-all"
                 >
                   <FiLinkedin className="w-4 h-4" />
                 </a>
@@ -259,261 +196,244 @@ export const About = () => {
             </div>
           </div>
 
-          {/* 2. AI-POWERED DEVELOPMENT SHOWCASE (Span 8 cols on LG) */}
-          <div className="lg:col-span-8 glass rounded-3xl p-6 sm:p-8 border border-primary/30 hover:border-primary/50 transition-all duration-300 relative overflow-hidden group shadow-xl">
-            {/* Background Accent Gradients */}
-            <div className="absolute top-0 right-0 w-80 h-80 bg-primary/10 rounded-full blur-3xl pointer-events-none -mr-20 -mt-20" />
-            <div className="absolute bottom-0 left-0 w-60 h-60 bg-emerald-500/5 rounded-full blur-2xl pointer-events-none -ml-10 -mb-10" />
+          {/* 2. AI-AUGMENTED ENGINEERING CONSOLE (Span 8 cols on LG) */}
+          <div className="col-span-1 md:col-span-2 lg:col-span-8 bg-[#1A1B1D] rounded-3xl p-6 sm:p-8 border border-[#837062]/25 hover:border-[#C5B2A4]/40 transition-all duration-300 relative overflow-hidden group shadow-2xl">
+            {/* Background Cabernet Velvet ambient wash */}
+            <div className="absolute top-0 right-0 w-96 h-96 bg-[#3E1A1C]/35 rounded-full blur-3xl pointer-events-none -mr-20 -mt-20" />
 
             <div className="relative z-10">
-              <div className="flex flex-wrap items-center justify-between gap-3 mb-4">
-                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/15 border border-primary/30 text-primary text-xs font-mono uppercase tracking-wider">
-                  <Sparkles className="w-3.5 h-3.5 animate-pulse" />
-                  <span>AI-Augmented Engineering</span>
+              <div className="flex flex-wrap items-center justify-between gap-2 mb-4">
+                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#3E1A1C]/40 border border-[#837062]/30 text-[#C5B2A4] text-xs font-mono tracking-widest uppercase">
+                  <Sparkles className="w-3.5 h-3.5 text-[#C5B2A4]" />
+                  <span>AI-AUGMENTED PIPELINE</span>
                 </div>
-                <span className="text-xs font-mono text-muted-foreground">
-                  High-Velocity Development
+                <span className="text-[11px] font-mono text-[#9A8B80] tracking-wider">
+                  HIGH-VELOCITY DELIVERY
                 </span>
               </div>
 
-              <h3 className="text-2xl sm:text-3xl font-bold text-white tracking-tight">
-                Streamlining Development Processes with Modern AI
+              <h3 className="text-xl sm:text-2xl lg:text-3xl font-bold text-[#F5EFEB] tracking-tight">
+                Amplifying Velocity, Not Replacing Human Craftsmanship
               </h3>
 
-              <p className="mt-3 text-sm sm:text-base text-muted-foreground leading-relaxed">
-                I actively incorporate state-of-the-art AI tooling (Claude, GitHub Copilot, Cursor, LLMs) directly into my daily engineering cycle. From rapid prototyping and architectural validation to automated test synthesis and deep debugging, AI allows me to eliminate repetitive friction, boost execution speed, and deliver robust software with maximum precision.
+              <p className="mt-3 text-xs sm:text-sm lg:text-base text-[#9A8B80] leading-relaxed max-w-2xl">
+                I actively treat state-of-the-art AI systems (Claude, Cursor, GitHub Copilot, LLMs) as high-bandwidth cognitive compilers. By integrating AI across architectural validation, test automation, and boilerplate reduction, I eliminate friction and compress delivery cycles while keeping code maintainable and robust.
               </p>
 
-              {/* 4 Feature Pillars Grid */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-6 pt-6 border-t border-white/10">
-                {aiBenefits.map((item, idx) => (
+              {/* 3 Engineering Pipeline Phases */}
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3.5 mt-6 pt-6 border-t border-[#837062]/20">
+                {aiWorkflowPhases.map((item, idx) => (
                   <div
                     key={idx}
-                    className="p-4 rounded-2xl bg-surface/40 border border-white/5 hover:border-primary/30 transition-colors"
+                    className="p-4 rounded-2xl bg-[#141517]/70 border border-[#837062]/20 hover:border-[#C5B2A4]/35 hover:bg-[#141517] transition-all"
                   >
-                    <div className="w-9 h-9 rounded-xl bg-primary/10 flex items-center justify-center text-primary mb-3">
-                      <item.icon className="w-4 h-4" />
+                    <div className="text-[10px] font-mono text-[#C5B2A4] uppercase tracking-wider mb-2 font-semibold">
+                      {item.phase}
                     </div>
-                    <h4 className="text-sm font-semibold text-white mb-1">{item.title}</h4>
-                    <p className="text-xs text-muted-foreground leading-relaxed">{item.description}</p>
+                    <h4 className="text-sm font-semibold text-[#F5EFEB] mb-1.5">{item.title}</h4>
+                    <p className="text-xs text-[#9A8B80] leading-relaxed">{item.description}</p>
                   </div>
+                ))}
+              </div>
+
+              {/* Tooling Tags */}
+              <div className="mt-6 pt-4 border-t border-[#837062]/15 flex flex-wrap items-center gap-2 text-[11px] font-mono text-[#C5B2A4]">
+                <span className="text-[#9A8B80] tracking-wider uppercase text-[10px] mr-1">Tooling Ecosystem:</span>
+                {["Claude Code", "Cursor", "GitHub Copilot", "Context Engineering", "Prompt Design"].map((tool, i) => (
+                  <span
+                    key={i}
+                    className="px-2.5 py-1 rounded-md bg-[#3E1A1C]/30 border border-[#837062]/30 text-[#C5B2A4]"
+                  >
+                    {tool}
+                  </span>
                 ))}
               </div>
             </div>
           </div>
 
-          {/* 3. CONTINUOUS LEARNING & GROWTH (Span 4 cols on LG) */}
-          <div className="sm:col-span-1 lg:col-span-4 glass rounded-3xl p-6 sm:p-7 border border-white/10 hover:border-primary/40 transition-all duration-300 flex flex-col justify-between">
+          {/* 3. CONTINUOUS LEARNING & TECH RADAR (Span 4 cols on LG) */}
+          <div className="col-span-1 md:col-span-1 lg:col-span-4 bg-[#1A1B1D] rounded-3xl p-5 sm:p-6 lg:p-7 border border-[#837062]/25 hover:border-[#C5B2A4]/40 transition-all duration-300 flex flex-col justify-between shadow-xl">
             <div>
               <div className="flex items-center gap-3 mb-4">
-                <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center text-primary shrink-0">
+                <div className="w-10 h-10 rounded-xl bg-[#3E1A1C]/40 border border-[#837062]/30 flex items-center justify-center text-[#C5B2A4] shrink-0">
                   <TrendingUp className="w-5 h-5" />
                 </div>
                 <div>
-                  <span className="text-xs font-mono text-primary uppercase tracking-wider block">Growth Mindset</span>
-                  <h3 className="text-lg font-bold text-white">Continuous Learning</h3>
+                  <span className="text-[11px] font-mono text-[#C5B2A4] uppercase tracking-widest block">HORIZON // 02</span>
+                  <h3 className="text-base sm:text-lg font-bold text-[#F5EFEB]">Continuous Learning</h3>
                 </div>
               </div>
 
-              <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed">
-                The tech landscape shifts continuously, and I embrace the learning curve. I consistently experiment with emerging frameworks, study architectural patterns, and enhance my technical capabilities.
+              <p className="text-xs sm:text-sm text-[#9A8B80] leading-relaxed">
+                Software paradigms shift rapidly. I stay ahead of the curve through active exploration, inspecting source code, and stress-testing new frameworks in production-like projects.
               </p>
 
               <div className="mt-5 space-y-2.5">
-                <div className="text-xs font-mono text-neutral-400 uppercase tracking-wider flex items-center gap-1.5">
-                  <BookOpen className="w-3.5 h-3.5 text-primary" />
-                  <span>Currently Exploring & Mastering:</span>
+                <div className="text-[10px] font-mono text-[#C5B2A4] uppercase tracking-widest flex items-center gap-1.5 font-medium">
+                  <span className="w-1.5 h-1.5 rounded-full bg-[#C5B2A4]" />
+                  <span>Current Exploration Stack:</span>
                 </div>
-                {learningFocus.map((topic, i) => (
+                {learningFrontiers.map((item, i) => (
                   <div
                     key={i}
-                    className="flex items-center gap-2 text-xs font-mono text-neutral-300 p-2 rounded-lg bg-surface/50 border border-white/5"
+                    className="p-2.5 rounded-xl bg-[#141517]/75 border border-[#837062]/20 space-y-1"
                   >
-                    <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
-                    <span>{topic}</span>
+                    <div className="flex items-center justify-between text-[10px] font-mono text-[#C5B2A4]">
+                      <span>{item.label}</span>
+                      <span className="text-[#837062]">0{i + 1}</span>
+                    </div>
+                    <p className="text-xs font-mono text-[#F5EFEB] leading-snug">{item.tech}</p>
                   </div>
                 ))}
               </div>
             </div>
 
-            <div className="mt-6 pt-4 border-t border-white/5 flex items-center justify-between text-xs font-mono text-neutral-400">
-              <span>Status: Curious & Evolving</span>
-              <span className="w-2 h-2 rounded-full bg-primary animate-ping" />
+            <div className="mt-5 pt-4 border-t border-[#837062]/20 flex items-center justify-between text-[11px] font-mono text-[#9A8B80]">
+              <span>MINDSET: ALWAYS BUILDING</span>
+              <span className="w-1.5 h-1.5 rounded-full bg-[#C5B2A4]" />
             </div>
           </div>
 
-          {/* 4. CORE ENGINEERING PRINCIPLES (Span 4 cols on LG) */}
-          <div className="sm:col-span-1 lg:col-span-4 glass rounded-3xl p-6 sm:p-7 border border-white/10 hover:border-primary/40 transition-all duration-300 flex flex-col justify-between">
+          {/* 4. CORE ENGINEERING TENETS (Span 4 cols on LG) */}
+          <div className="col-span-1 md:col-span-1 lg:col-span-4 bg-[#1A1B1D] rounded-3xl p-5 sm:p-6 lg:p-7 border border-[#837062]/25 hover:border-[#C5B2A4]/40 transition-all duration-300 flex flex-col justify-between shadow-xl">
             <div>
               <div className="flex items-center gap-3 mb-4">
-                <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center text-primary shrink-0">
+                <div className="w-10 h-10 rounded-xl bg-[#3E1A1C]/40 border border-[#837062]/30 flex items-center justify-center text-[#C5B2A4] shrink-0">
                   <Code2 className="w-5 h-5" />
                 </div>
                 <div>
-                  <span className="text-xs font-mono text-primary uppercase tracking-wider block">Methodology</span>
-                  <h3 className="text-lg font-bold text-white">Core Engineering</h3>
+                  <span className="text-[11px] font-mono text-[#C5B2A4] uppercase tracking-widest block">STANDARDS // 03</span>
+                  <h3 className="text-base sm:text-lg font-bold text-[#F5EFEB]">Engineering Tenets</h3>
                 </div>
               </div>
 
-              <div className="space-y-3.5">
-                <div className="p-3 rounded-xl bg-surface/40 border border-white/5">
+              <div className="space-y-3">
+                <div className="p-3 rounded-xl bg-[#141517]/70 border border-[#837062]/20">
                   <div className="flex items-center justify-between mb-1">
-                    <span className="text-xs font-semibold text-white">Clean & Scalable Code</span>
-                    <span className="text-[10px] font-mono text-primary">Priority 01</span>
+                    <span className="text-xs font-semibold text-[#F5EFEB]">Clean & Maintainable</span>
+                    <span className="text-[10px] font-mono text-[#C5B2A4]">01</span>
                   </div>
-                  <p className="text-xs text-muted-foreground">
-                    Writing maintainable, modular, and self-documenting code built for longevity.
+                  <p className="text-xs text-[#9A8B80] leading-relaxed">
+                    Writing self-documenting code with clear boundaries, modular components, and testable interfaces.
                   </p>
                 </div>
 
-                <div className="p-3 rounded-xl bg-surface/40 border border-white/5">
+                <div className="p-3 rounded-xl bg-[#141517]/70 border border-[#837062]/20">
                   <div className="flex items-center justify-between mb-1">
-                    <span className="text-xs font-semibold text-white">Performance-Driven</span>
-                    <span className="text-[10px] font-mono text-primary">Priority 02</span>
+                    <span className="text-xs font-semibold text-[#F5EFEB]">Measurable Performance</span>
+                    <span className="text-[10px] font-mono text-[#C5B2A4]">02</span>
                   </div>
-                  <p className="text-xs text-muted-foreground">
-                    Optimizing bundle sizes, database calls, and render pipelines for ultra-responsive apps.
+                  <p className="text-xs text-[#9A8B80] leading-relaxed">
+                    Prioritizing low bundle weight, clean render trees, zero layout shift, and instant feedback.
                   </p>
                 </div>
 
-                <div className="p-3 rounded-xl bg-surface/40 border border-white/5">
+                <div className="p-3 rounded-xl bg-[#141517]/70 border border-[#837062]/20">
                   <div className="flex items-center justify-between mb-1">
-                    <span className="text-xs font-semibold text-white">Agile & Collaborative</span>
-                    <span className="text-[10px] font-mono text-primary">Priority 03</span>
+                    <span className="text-xs font-semibold text-[#F5EFEB]">Pragmatic Delivery</span>
+                    <span className="text-[10px] font-mono text-[#C5B2A4]">03</span>
                   </div>
-                  <p className="text-xs text-muted-foreground">
-                    Iterative delivery, proactive communication, and clear feedback loops.
+                  <p className="text-xs text-[#9A8B80] leading-relaxed">
+                    Balancing technical elegance with real business goals to build dependable, scalable software.
                   </p>
                 </div>
               </div>
             </div>
 
-            <div className="mt-6 pt-4 border-t border-white/5 text-xs font-mono text-muted-foreground flex items-center justify-between">
-              <span>Architecture Standards</span>
-              <span className="text-primary font-bold">100% Modern</span>
+            <div className="mt-5 pt-4 border-t border-[#837062]/20 text-[11px] font-mono text-[#9A8B80] flex items-center justify-between">
+              <span>PHILOSOPHY</span>
+              <span className="text-[#C5B2A4] font-medium">CRAFT OVER HYPE</span>
             </div>
           </div>
 
-          {/* 5. PROFESSIONAL EXPERIENCE TIMELINE (Span 7 cols on LG) */}
-          <div className="col-span-12 lg:col-span-7 glass rounded-3xl p-6 sm:p-8 border border-white/10 hover:border-primary/30 transition-all duration-300 shadow-xl">
-            <div className="flex items-center justify-between mb-6">
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center text-primary shrink-0">
-                  <Briefcase className="w-5 h-5" />
+          {/* 5. CAREER MILESTONES TIMELINE (Span 12 cols on LG) */}
+          <div className="col-span-1 md:col-span-2 lg:col-span-12 bg-[#1A1B1D] rounded-3xl p-5 sm:p-7 lg:p-8 border border-[#837062]/25 hover:border-[#C5B2A4]/35 transition-all duration-300 shadow-2xl flex flex-col justify-between">
+            <div>
+              <div className="flex items-center justify-between mb-6">
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 rounded-xl bg-[#3E1A1C]/40 border border-[#837062]/30 flex items-center justify-center text-[#C5B2A4] shrink-0">
+                    <Briefcase className="w-5 h-5" />
+                  </div>
+                  <div>
+                    <span className="text-[11px] font-mono text-[#C5B2A4] uppercase tracking-widest block">MILESTONES // 04</span>
+                    <h3 className="text-lg sm:text-xl font-bold text-[#F5EFEB]">Professional Journey</h3>
+                  </div>
                 </div>
-                <div>
-                  <span className="text-xs font-mono text-primary uppercase tracking-wider block">Track Record</span>
-                  <h3 className="text-xl font-bold text-white">Work Experience</h3>
-                </div>
+
+                <a
+                  href="#experience"
+                  className="inline-flex items-center gap-1 text-[11px] font-mono text-[#9A8B80] hover:text-[#C5B2A4] transition-colors"
+                >
+                  <span>FULL ARCHIVE</span>
+                  <ArrowUpRight className="w-3.5 h-3.5" />
+                </a>
               </div>
 
-              <a
-                href="#experience"
-                className="hidden sm:inline-flex items-center gap-1 text-xs font-mono text-muted-foreground hover:text-primary transition-colors"
-              >
-                <span>Full Timeline</span>
-                <ArrowUpRight className="w-3.5 h-3.5" />
-              </a>
-            </div>
+              {/* Experience Cards - Responsive 2-column grid */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-5">
+                {experiences.map((exp, idx) => (
+                  <div
+                    key={idx}
+                    className="p-5 sm:p-6 rounded-2xl bg-[#141517]/80 border border-[#837062]/20 hover:border-[#C5B2A4]/35 transition-all duration-200 group/exp flex flex-col justify-between"
+                  >
+                    <div>
+                      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-3">
+                        <div className="flex flex-wrap items-center gap-2">
+                          <span className="text-xs font-mono text-[#C5B2A4] font-medium flex items-center gap-1.5">
+                            <Calendar className="w-3.5 h-3.5 text-[#837062]" />
+                            {exp.period}
+                          </span>
+                          <span className="text-[#837062]">•</span>
+                          <span className="text-xs font-mono text-[#9A8B80]">{exp.company}</span>
+                        </div>
 
-            {/* Experience Items */}
-            <div className="space-y-6">
-              {experiences.map((exp, idx) => (
-                <div
-                  key={idx}
-                  className="p-5 rounded-2xl bg-surface/50 border border-white/5 hover:border-primary/30 transition-all duration-200 group/exp"
-                >
-                  <div className="flex flex-wrap items-center justify-between gap-2 mb-2">
-                    <div className="flex items-center gap-2">
-                      <span className="text-xs font-mono text-primary font-medium flex items-center gap-1.5">
-                        <Calendar className="w-3.5 h-3.5" />
-                        {exp.period}
-                      </span>
-                      <span className="text-neutral-500">•</span>
-                      <span className="text-xs font-mono text-neutral-300">{exp.company}</span>
+                        <span
+                          className={`inline-block w-fit text-[10px] font-mono px-2.5 py-0.5 rounded-full border ${
+                            exp.current
+                              ? "bg-[#3E1A1C]/40 border-[#837062]/40 text-[#C5B2A4]"
+                              : "bg-[#1A1B1D] border-[#837062]/20 text-[#837062]"
+                          }`}
+                        >
+                          {exp.badge}
+                        </span>
+                      </div>
+
+                      <h4 className="text-base sm:text-lg font-semibold text-[#F5EFEB] group-hover/exp:text-[#C5B2A4] transition-colors">
+                        {exp.role}
+                      </h4>
+
+                      <p className="text-xs sm:text-sm text-[#9A8B80] mt-2.5 leading-relaxed">
+                        {exp.description}
+                      </p>
                     </div>
 
-                    <span
-                      className={`text-[11px] font-mono px-2.5 py-0.5 rounded-full border ${
-                        exp.current
-                          ? "bg-emerald-500/10 border-emerald-500/30 text-emerald-400"
-                          : "bg-white/5 border-white/10 text-neutral-400"
-                      }`}
-                    >
-                      {exp.badge}
-                    </span>
-                  </div>
-
-                  <h4 className="text-base sm:text-lg font-semibold text-white group-hover/exp:text-primary transition-colors">
-                    {exp.role}
-                  </h4>
-
-                  <p className="text-xs sm:text-sm text-muted-foreground mt-2 leading-relaxed">
-                    {exp.description}
-                  </p>
-
-                  <div className="flex flex-wrap gap-1.5 mt-4">
-                    {exp.technologies.map((tech, tIdx) => (
-                      <span
-                        key={tIdx}
-                        className="px-2.5 py-1 rounded-md bg-black/40 border border-white/10 text-[11px] font-mono text-neutral-300"
-                      >
-                        {tech}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* 6. TECHNICAL SKILLS MATRIX (Span 5 cols on LG) */}
-          <div className="col-span-12 lg:col-span-5 glass rounded-3xl p-6 sm:p-8 border border-white/10 hover:border-primary/30 transition-all duration-300 shadow-xl flex flex-col justify-between">
-            <div>
-              <div className="flex items-center gap-3 mb-6">
-                <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center text-primary shrink-0">
-                  <Layers className="w-5 h-5" />
-                </div>
-                <div>
-                  <span className="text-xs font-mono text-primary uppercase tracking-wider block">Competencies</span>
-                  <h3 className="text-xl font-bold text-white">Technical Skills</h3>
-                </div>
-              </div>
-
-              {/* Skill Matrix Categories */}
-              <div className="space-y-4">
-                {skillCategories.map((cat, cIdx) => (
-                  <div key={cIdx} className="space-y-2">
-                    <span className="text-xs font-mono text-neutral-400 uppercase tracking-wider block">
-                      {cat.title}
-                    </span>
-                    <div className="flex flex-wrap gap-2">
-                      {cat.skills.map((skill, sIdx) => {
-                        const IconComponent = skill.icon;
-                        return (
-                          <div
-                            key={sIdx}
-                            className="inline-flex items-center gap-2 px-3 py-1.5 rounded-xl bg-surface/60 border border-white/10 hover:border-primary/40 hover:bg-surface text-xs font-mono text-neutral-200 transition-all group/skill"
-                          >
-                            <IconComponent className={`w-3.5 h-3.5 ${skill.color} group-hover/skill:scale-110 transition-transform`} />
-                            <span>{skill.name}</span>
-                          </div>
-                        );
-                      })}
+                    <div className="flex flex-wrap gap-1.5 mt-5 pt-4 border-t border-[#837062]/15">
+                      {exp.technologies.map((tech, tIdx) => (
+                        <span
+                          key={tIdx}
+                          className="px-2.5 py-1 rounded-md bg-[#1A1B1D] border border-[#837062]/25 text-[10px] font-mono text-[#C5B2A4]"
+                        >
+                          {tech}
+                        </span>
+                      ))}
                     </div>
                   </div>
                 ))}
               </div>
             </div>
 
-            {/* Matrix Footer Badge */}
-            <div className="mt-6 pt-4 border-t border-white/10 flex items-center justify-between text-xs font-mono text-neutral-400">
-              <span className="flex items-center gap-1.5 text-primary">
-                <Sparkles className="w-3.5 h-3.5" />
-                AI-Integrated Workflow
-              </span>
-              <span>Continuously Updating</span>
+            <div className="mt-6 pt-4 border-t border-[#837062]/20 text-[11px] font-mono text-[#9A8B80] flex items-center justify-between">
+              <span>TRACK RECORD</span>
+              <span className="text-[#C5B2A4]">SOLVING REAL PROBLEMS</span>
             </div>
+          </div>
+
+          {/* 6. CORE TECHNICAL ARSENAL - CURVED DRAGGABLE GLASS CAROUSEL (Span 12 cols on LG) */}
+          <div className="col-span-1 md:col-span-2 lg:col-span-12 bg-[#1A1B1D] rounded-3xl p-5 sm:p-7 lg:p-8 border border-[#837062]/25 hover:border-[#C5B2A4]/35 transition-all duration-300 shadow-2xl relative overflow-hidden group">
+            {/* Ambient luxury glow */}
+            <div className="absolute -top-16 right-1/4 w-96 h-48 bg-[#3E1A1C]/25 rounded-full blur-3xl pointer-events-none" />
+            
+            <CurvedSkillsCarousel />
           </div>
 
         </div>
